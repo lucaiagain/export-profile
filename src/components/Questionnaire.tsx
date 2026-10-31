@@ -45,7 +45,10 @@ async function api(path: string, method: string, token: string | null, body?: un
     body: body === undefined ? undefined : JSON.stringify(body),
   });
   const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw Object.assign(new Error(data.error || "Errore di rete"), { status: res.status });
+  if (!res.ok) {
+    const msg = data.error || (res.status >= 500 ? "Si è verificato un errore sul server. Riprova tra qualche minuto." : "Errore di connessione. Controlla la rete e riprova.");
+    throw Object.assign(new Error(msg), { status: res.status });
+  }
   return data;
 }
 

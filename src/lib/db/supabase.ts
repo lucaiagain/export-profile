@@ -3,8 +3,15 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { config } from "@/lib/config";
 import type { OutboxRow, ProfileFilters, ProfileRow, Store } from "./types";
 
-function must<T>(r: { data: T | null; error: { message: string } | null }): T {
-  if (r.error) throw new Error(r.error.message);
+type PgError = { message: string; code?: string; details?: string | null; hint?: string | null };
+
+function fail(e: PgError, status?: number): never {
+  const parts = [e.message || "errore senza messaggio", e.code && `codice ${e.code}`, status && `HTTP ${status}`, e.details, e.hint];
+  throw new Error("Supabase: " + parts.filter(Boolean).join(" · "));
+}
+
+function must<T>(r: { data: T | null; error: PgError | null; status?: number }): T {
+  if (r.error) fail(r.error, r.status);
   return r.data as T;
 }
 
@@ -89,12 +96,14 @@ export class SupabaseStore implements Store {
 
   async rateLimit(key: string, windowSec: number, max: number) {
     const since = new Date(Date.now() - windowSec * 1000).toISOString();
-    const { count, error } = await this.db
+    // GET (non HEAD): in caso di errore PostgREST restituisce il dettaglio
+    const { count, error, status } = await this.db
       .from("rate_limits")
-      .select("*", { count: "exact", head: true })
+      .select("key", { count: "exact" })
       .eq("key", key)
-      .gte("created_at", since);
-    if (error) throw new Error(error.message);
+      .gte("created_at", since)
+      .limit(1);
+    if (error) fail(error, status);
     if ((count ?? 0) >= max) return true;
     must(await this.db.from("rate_limits").insert({ key }));
     // pulizia occasionale delle righe vecchie
