@@ -1,42 +1,294 @@
+/* Export Profile IAGAIN – stili condivisi (canvas "Export Profile IAGAIN – Grafica"). */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --blue: #1f232f;
+  --gold: #ad9677;
+  --gold-text: #7a6747; /* oro per testo piccolo su bianco (AA) */
+  --gold-dark: #8a7556;
+  --gold-light: #f3eee6;
+  --purple: #a3195b;
+  --purple-hover: #7e1246;
+  --purple-light: #f7e8ef;
+  --purple-bar: #e7c3d4;
+  --bg: #f4f5f7;
+  --white: #ffffff;
+  --muted: #4a5063;
+  --muted-on-blue: #c8cbd3;
+  --line: #dde0e6;
+  --line-soft: #eef0f3;
+  --line-on-blue: #3a4154;
+  --bad-text: #9e2f2f;
+  --bad-bg: #f8e4e4;
+  --warn-text: #8a5a12;
+  --warn-bg: #fbf0dd;
+  --good: #2e7d5b;
+  --good-text: #2e6b50;
+  --sans: var(--font-lato), "Lato", "Helvetica Neue", Arial, sans-serif;
+  --cond: var(--font-barlow), "Barlow Semi Condensed", "Arial Narrow", sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
-
 html,
 body {
-  max-width: 100vw;
+  margin: 0;
+  background: var(--bg);
+  color: var(--blue);
+  font-family: var(--sans);
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
   overflow-x: hidden;
 }
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
 a {
-  color: inherit;
-  text-decoration: none;
+  color: var(--purple);
+}
+a:hover {
+  color: var(--purple-hover);
+}
+:focus-visible {
+  outline: 3px solid var(--purple);
+  outline-offset: 2px;
+}
+img,
+svg {
+  max-width: 100%;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+/* Testata e piede */
+.site-header {
+  background: var(--blue);
+}
+.site-header .inner,
+.site-footer .inner,
+.wrap {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+.site-header .inner {
+  padding-top: 14px;
+  padding-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.site-header .logo {
+  height: 52px;
+  width: auto;
+  display: block;
+}
+.site-header .tagline {
+  font-family: var(--cond);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.site-footer {
+  border-top: 1px solid var(--line);
+  background: var(--white);
+  margin-top: auto;
+}
+.site-footer .inner {
+  padding-top: 18px;
+  padding-bottom: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  color: var(--muted);
+}
+.site-footer img {
+  height: 24px;
+  width: auto;
+  display: block;
+}
+
+/* Etichette e numeri */
+.kicker {
+  font-family: var(--cond);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-text);
+}
+.cond {
+  font-family: var(--cond);
+}
+
+/* Bottoni */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 0 24px;
+  border-radius: 6px;
+  font: 700 16px/1.2 var(--sans);
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+}
+.btn-primary {
+  background: var(--purple);
+  color: var(--white);
+}
+.btn-primary:hover {
+  background: var(--purple-hover);
+  color: var(--white);
+}
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+.btn-outline {
+  background: transparent;
+  border-color: var(--blue);
+  color: var(--blue);
+}
+.btn-outline:hover {
+  background: var(--white);
+  color: var(--blue);
+}
+.btn-ghost {
+  background: var(--white);
+  border-color: #c8cbd3;
+  color: var(--blue);
+}
+.btn-ghost:hover {
+  color: var(--blue);
+  border-color: var(--blue);
+}
+.btn-on-blue {
+  background: transparent;
+  border-color: #5a6175;
+  color: var(--white);
+  min-height: 44px;
+  font-size: 15px;
+  padding: 0 18px;
+}
+.btn-on-blue:hover {
+  color: var(--white);
+  border-color: var(--white);
+}
+.btn-gold {
+  background: var(--gold);
+  color: var(--blue);
+  min-height: 44px;
+  font-size: 15px;
+  padding: 0 18px;
+}
+.btn-gold:hover {
+  background: #c2ae90;
+  color: var(--blue);
+}
+
+/* Stati delle aree */
+.pill {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.pill-top {
+  background: #e3f1ea;
+  color: var(--good-text);
+}
+.pill-ok {
+  background: #e3f1ea;
+  color: var(--good-text);
+}
+.pill-warn {
+  background: var(--warn-bg);
+  color: var(--warn-text);
+}
+.pill-bad {
+  background: var(--bad-bg);
+  color: var(--bad-text);
+}
+
+/* Moduli */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.field > label,
+.field-label {
+  font-weight: 700;
+  font-size: 15px;
+}
+.field .req {
+  color: var(--purple);
+}
+.input,
+.select {
+  min-height: 48px;
+  padding: 10px 12px;
+  border: 1.5px solid #c8cbd3;
+  border-radius: 6px;
+  font: 400 16px/1.3 var(--sans);
+  background: var(--white);
+  color: var(--blue);
+  width: 100%;
+}
+.input:disabled {
+  background: var(--line-soft);
+  color: var(--muted);
+}
+.field.invalid .input,
+.field.invalid .select {
+  border-color: var(--bad-text);
+}
+.field-error {
+  font-size: 14px;
+  color: var(--bad-text);
+}
+.check {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  min-height: 44px;
+  padding: 10px 0;
+  font-size: 15px;
+  line-height: 1.45;
+  cursor: pointer;
+}
+.check input {
+  width: 20px;
+  height: 20px;
+  margin: 1px 0 0;
+  flex: none;
+  accent-color: var(--purple);
+}
+.check.invalid span {
+  color: var(--bad-text);
 }

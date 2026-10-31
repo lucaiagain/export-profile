@@ -1,0 +1,1126 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+</head>
+<body>
+<title>Export Profile IAGAIN</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400&display=swap">
+<style>
+/* Layout: colonna centrale da documento; questionario a passi, profilo come "foglio" stampabile con brand IAGAIN (blu/oro) e WIFO viola per lo scenario con IAGAIN */
+:root{
+  --bg:#EEF0F3; --paper:#FFFFFF; --ink:#1F232F; --ink-2:#4A5063; --muted:#7A8093;
+  --line:#D9DCE3; --soft:#F5F6F8;
+  --navy:#1F232F; --gold:#AD9677; --gold-soft:#F3EEE6; --purple:#A3195B; --purple-soft:#F7E8EF;
+  --ok:#2E7D5B; --ok-soft:#E3F2EA; --warn:#B7791F; --warn-soft:#FBF0DD; --bad:#B23B3B; --bad-soft:#F8E4E4;
+  --on-navy:#FFFFFF;
+  --font:"Lato","Helvetica Neue",Arial,sans-serif;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12151C; --paper:#1A1E28; --ink:#ECEDF1; --ink-2:#B9BDCA; --muted:#8C92A3;
+  --line:#2D3342; --soft:#222735;
+  --navy:#2A3042; --gold:#C9B391; --gold-soft:#2C2820; --purple:#D9619A; --purple-soft:#33202A;
+  --ok:#5DBB8E; --ok-soft:#1C2E26; --warn:#E0A84E; --warn-soft:#33291A; --bad:#E07272; --bad-soft:#352022;
+  --on-navy:#FFFFFF; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#12151C; --paper:#1A1E28; --ink:#ECEDF1; --ink-2:#B9BDCA; --muted:#8C92A3;
+  --line:#2D3342; --soft:#222735;
+  --navy:#2A3042; --gold:#C9B391; --gold-soft:#2C2820; --purple:#D9619A; --purple-soft:#33202A;
+  --ok:#5DBB8E; --ok-soft:#1C2E26; --warn:#E0A84E; --warn-soft:#33291A; --bad:#E07272; --bad-soft:#352022;
+  --on-navy:#FFFFFF; color-scheme:dark }
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.55;margin:0}
+.wrap{max-width:900px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
+h1,h2,h3{text-wrap:balance;margin:0;line-height:1.2}
+a{color:var(--purple)}
+button{font:inherit}
+.topbar{background:var(--navy);color:var(--on-navy)}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:14px}
+.brand{font-weight:900;letter-spacing:.28em;font-size:18px}
+.brand small{display:block;font-weight:400;letter-spacing:.12em;font-size:10.5px;color:var(--gold);margin-top:2px;text-transform:uppercase}
+.wem-badge{font-size:12px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--gold);color:var(--gold);padding:3px 10px;border-radius:999px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:12px 22px;font-weight:700;border:1.5px solid transparent;cursor:pointer;text-decoration:none;font-size:15px}
+.btn-primary{background:var(--purple);color:#fff}
+.btn-primary:hover{filter:brightness(1.08)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn-ghost:hover{border-color:var(--ink-2)}
+.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.opt:focus-within{outline:3px solid var(--gold);outline-offset:2px}
+
+/* INTRO */
+.hero{padding-block:44px 28px;display:grid;grid-template-columns:1.25fr 1fr;gap:36px;align-items:center}
+.eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.hero h1{font-size:clamp(30px,5vw,46px);font-weight:900;margin:10px 0 14px}
+.hero p{color:var(--ink-2);max-width:56ch;margin:0 0 18px}
+.facts{display:flex;flex-wrap:wrap;gap:8px 22px;margin:0 0 24px;padding:0;list-style:none;color:var(--ink-2);font-size:14px}
+.facts b{color:var(--ink);font-size:20px;font-weight:900;margin-right:4px}
+.cta-row{display:flex;flex-wrap:wrap;gap:10px}
+.ladder{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.ladder h3{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.rung{display:grid;grid-template-columns:62px 1fr;gap:12px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}
+.rung:first-of-type{border-top:0}
+.rung .n{white-space:nowrap;font-weight:900;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.rung .nm{font-weight:700}
+.rung .ds{font-size:13px;color:var(--muted)}
+.rung.thr{position:relative}
+.rung.thr::after{content:"soglia minima export";position:absolute;right:0;top:10px;font-size:11px;color:var(--purple);font-weight:700;letter-spacing:.04em}
+.areas4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding-block:8px 0}
+.areas4 div{border-top:3px solid var(--gold);padding-top:10px}
+.areas4 h3{font-size:15px;margin-bottom:4px}
+.areas4 p{font-size:13.5px;color:var(--ink-2);margin:0}
+.draft-note{margin-top:16px;font-size:14px;color:var(--ink-2)}
+
+/* QUIZ */
+.quiz-head{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:18px 12px;border-bottom:1px solid var(--line)}
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:10px}
+.steps span{height:5px;border-radius:3px;background:var(--line)}
+.steps span.done{background:var(--gold)}
+.steps span.cur{background:var(--purple)}
+.quiz-head .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.quiz-head h2{font-size:24px;font-weight:900}
+.quiz-head .cnt{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.step-intro{color:var(--ink-2);margin:18px 0 8px;max-width:62ch}
+fieldset{border:0;margin:0;padding:22px 0;border-bottom:1px solid var(--line);min-width:0}
+legend{font-weight:700;font-size:17px;padding:0;margin-bottom:4px}
+.qn{color:var(--gold);font-weight:900;margin-right:8px;font-variant-numeric:tabular-nums}
+.hint{font-size:13.5px;color:var(--muted);margin:0 0 12px}
+.opts{display:grid;gap:8px;margin-top:10px}
+.opt{display:flex;gap:12px;align-items:flex-start;background:var(--paper);border:1.5px solid var(--line);border-radius:8px;padding:11px 14px;cursor:pointer}
+.opt:hover{border-color:var(--ink-2)}
+.opt input{margin:4px 0 0;accent-color:var(--purple);flex:none;width:18px;height:18px}
+.opt:has(input:checked){border-color:var(--purple);background:var(--purple-soft)}
+fieldset.missing legend{color:var(--bad)}
+fieldset.missing .opt{border-color:var(--bad-soft)}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px;padding-block:18px}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field.full{grid-column:1/-1}
+.field label{font-weight:700;font-size:14px}
+.field input:disabled{opacity:.5}
+.field input,.field select,.field textarea{font:inherit;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:8px;padding:10px 12px;width:100%}
+.field.missing input,.field.missing select{border-color:var(--bad)}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--ink-2)}
+.check input{margin-top:4px;accent-color:var(--purple);width:17px;height:17px;flex:none}
+.check.missing{color:var(--bad)}
+.nav{display:flex;justify-content:space-between;gap:10px;padding-top:24px;flex-wrap:wrap}
+.err{color:var(--bad);font-weight:700;font-size:14px;margin-top:12px}
+
+/* PROFILE */
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;padding-block:20px 14px}
+.toolbar .l,.toolbar .r{display:flex;gap:8px;flex-wrap:wrap}
+.toolbar .btn{padding:9px 16px;font-size:14px}
+.example-flag{background:var(--gold-soft);color:var(--ink);border:1px solid var(--gold);border-radius:8px;padding:10px 14px;font-size:14px;margin-bottom:14px}
+.sheet{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.cover{background:var(--navy);color:var(--on-navy);padding:30px 34px 26px}
+.cover .top{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.cover h1{font-size:clamp(28px,4.6vw,40px);font-weight:900;margin:18px 0 6px;color:#fff}
+.cover .meta{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:14px;color:#C9CCD6}
+.sec{padding:30px 34px;border-top:1px solid var(--line)}
+.sec h2{font-size:22px;font-weight:900;margin-bottom:6px}
+.sec .lead{color:var(--ink-2);max-width:64ch;margin:0 0 18px}
+.kicker{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:6px}
+.grade{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center}
+.score-big{font-size:68px;font-weight:900;line-height:1;font-variant-numeric:tabular-nums}
+.score-big small{font-size:20px;color:var(--muted);font-weight:700}
+.lvl-name{font-size:22px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin-top:6px}
+.lvl-text{color:var(--ink-2);margin:0;max-width:56ch}
+.scale{margin-top:26px}
+.scale-bar{position:relative;height:40px}
+.scale-bands{display:grid;grid-template-columns:repeat(5,1fr);height:12px;border-radius:6px;overflow:hidden;position:absolute;left:0;right:0;top:14px}
+.scale-bands i{display:block}
+.scale-bands i:nth-child(1){background:var(--bad-soft)}
+.scale-bands i:nth-child(2){background:var(--warn-soft)}
+.scale-bands i:nth-child(3){background:var(--gold-soft)}
+.scale-bands i:nth-child(4){background:var(--ok-soft)}
+.scale-bands i:nth-child(5){background:color-mix(in srgb,var(--ok) 30%,var(--paper))}
+.mk{position:absolute;top:8px;width:24px;height:24px;margin-left:-12px;border-radius:50%;border:3px solid var(--paper);box-shadow:0 0 0 1px var(--line)}
+.mk.now{background:var(--navy)}
+:root[data-theme="dark"] .mk.now{background:var(--ink)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .mk.now{background:var(--ink)}}
+.mk.iag{background:var(--purple)}
+.thr-line{position:absolute;top:2px;bottom:2px;width:2px;background:var(--ink);opacity:.5}
+.scale-lbl{display:grid;grid-template-columns:repeat(5,1fr);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:center;margin-top:4px}
+.scale-lbl span.on{color:var(--ink);font-weight:900}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--ink-2);margin-top:12px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:50%;vertical-align:-1px;margin-right:6px}
+.legend i.dash{border-radius:0;height:2px;width:16px;vertical-align:3px;background:var(--ink);opacity:.6}
+.radar-wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:24px;align-items:center}
+.radar-wrap svg{width:100%;height:auto;max-width:460px;display:block}
+.area-table{width:100%;border-collapse:collapse;font-size:14.5px;font-variant-numeric:tabular-nums}
+.area-table th{text-align:left;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:6px 6px;border-bottom:1px solid var(--line)}
+.area-table td{padding:10px 6px;border-bottom:1px solid var(--line)}
+.area-table td.num{text-align:right;font-weight:700}
+.area-table td.num.p{color:var(--purple)}
+.area-table tr.tot td{border-bottom:0;font-weight:900}
+.pill{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.04em;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.pill.bad{background:var(--bad-soft);color:var(--bad)}
+.pill.warn{background:var(--warn-soft);color:var(--warn)}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+.pill.top{background:var(--ok);color:var(--paper)}
+.area{padding:30px 34px;border-top:1px solid var(--line);break-inside:avoid-page}
+.area-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap;margin-bottom:6px}
+.area-head h3{font-size:20px;font-weight:900}
+.area-score{font-size:28px;font-weight:900;font-variant-numeric:tabular-nums;text-align:right;line-height:1}
+.area-score small{display:block;font-size:12px;color:var(--purple);font-weight:700;margin-top:4px}
+.area .desc{color:var(--ink-2);margin:0 0 16px;max-width:64ch;font-size:15px}
+.ind{display:grid;grid-template-columns:minmax(0,210px) 1fr 64px;gap:12px;align-items:center;padding:6px 0;font-size:14px}
+.ind .nm{color:var(--ink-2)}
+.track{position:relative;height:10px;background:var(--soft);border-radius:5px}
+.track .up{position:absolute;left:0;top:0;bottom:0;border-radius:5px;background:repeating-linear-gradient(-45deg,var(--purple) 0 3px,transparent 3px 6px);opacity:.55}
+.track .cur{position:absolute;left:0;top:0;bottom:0;border-radius:5px;background:var(--navy)}
+:root[data-theme="dark"] .track .cur{background:var(--ink-2)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .track .cur{background:var(--ink-2)}}
+.track .thr{position:absolute;top:-3px;bottom:-3px;width:2px;left:60%;background:var(--ink);opacity:.35}
+.ind .v{text-align:right;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ind .v em{font-style:normal;color:var(--purple)}
+.ind select{font:inherit;font-size:13px;padding:2px 4px;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink)}
+.swot{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+.swot div{min-width:0}
+.swot h4{font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin:0 0 8px;padding-bottom:6px;border-bottom:2px solid var(--line)}
+.swot .f h4{border-color:var(--ok);color:var(--ok)}
+.swot .w h4{border-color:var(--bad);color:var(--bad)}
+.swot .s h4{border-color:var(--gold);color:var(--gold)}
+.swot ul{margin:0;padding-left:18px;font-size:14px;color:var(--ink-2)}
+.swot li{margin-bottom:6px}
+.swot .empty{font-size:14px;color:var(--muted);font-style:italic}
+.blockers{margin-top:24px;background:var(--bad-soft);border-left:4px solid var(--bad);border-radius:8px;padding:16px 18px}
+.blockers h3{font-size:17px;font-weight:900;margin:2px 0 8px}
+.blockers ul{margin:0;padding-left:18px;color:var(--ink);font-size:14.5px}
+.blockers li{margin-bottom:6px}
+.wem-note{margin-top:16px;background:var(--gold-soft);border-left:3px solid var(--gold);padding:12px 14px;font-size:14.5px;white-space:pre-wrap}
+.wem-edit{margin-top:16px}
+.print-only{display:none}
+.wem-note:empty{display:none!important}
+.wem-edit textarea{width:100%;min-height:70px;font:inherit;font-size:14px;padding:10px;border:1.5px dashed var(--gold);border-radius:8px;background:var(--paper);color:var(--ink)}
+.with{background:var(--purple-soft)}
+.with .big{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-weight:900;font-size:22px;margin:4px 0 18px}
+.with .big .arrow{color:var(--purple)}
+.with .big .to{color:var(--purple)}
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.cols2 h4{font-size:13px;letter-spacing:.1em;text-transform:uppercase;margin:0 0 10px}
+.cols2 ul{margin:0;padding-left:18px;font-size:14.5px;color:var(--ink-2)}
+.cols2 li{margin-bottom:8px}
+.cols2 li b{color:var(--ink)}
+.next{display:grid;grid-template-columns:1fr;gap:14px}
+.svc{border:2px solid var(--purple);border-radius:var(--r);padding:22px}
+.svc .tag{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:900;color:var(--purple)}
+.svc h3{font-size:24px;font-weight:900;margin:6px 0 8px}
+.svc p{color:var(--ink-2);margin:0 0 12px;max-width:62ch}
+.svc ul{margin:0 0 16px;padding-left:18px;color:var(--ink-2);font-size:14.5px}
+.svc .actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.svc .url{font-size:13px;color:var(--muted);word-break:break-all}
+.alt{font-size:14.5px;color:var(--ink-2)}
+.method{font-size:13.5px;color:var(--muted)}
+.method p{margin:0 0 8px;max-width:80ch}
+.foot{padding:18px 34px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12px;color:var(--muted)}
+.wem-sign{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:14px}
+.wem-sign input{font:inherit;padding:6px 10px;border:1.5px dashed var(--gold);border-radius:6px;background:var(--paper);color:var(--ink)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;z-index:20}
+.copybox{width:100%;min-height:120px;font-family:ui-monospace,Menlo,monospace;font-size:12px;margin-top:10px;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--soft);color:var(--ink)}
+
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr;padding-top:28px}
+  .areas4{grid-template-columns:1fr 1fr}
+  .fields{grid-template-columns:1fr}
+  .grade{grid-template-columns:1fr;gap:12px}
+  .radar-wrap{grid-template-columns:1fr}
+  .swot{grid-template-columns:1fr}
+  .cols2{grid-template-columns:1fr}
+  .cover,.sec,.area,.foot{padding-left:20px;padding-right:20px}
+  .ind{grid-template-columns:1fr 64px;gap:4px 12px}
+  .ind .nm{grid-column:1/-1}
+  .ind .track{grid-column:1}
+}
+@media (prefers-reduced-motion:no-preference){.track .cur,.track .up{transition:width .4s ease}}
+@media print{
+  :root{--bg:#fff;--paper:#fff;--ink:#1F232F;--ink-2:#4A5063;--muted:#7A8093;--line:#D9DCE3;--soft:#F5F6F8;--navy:#1F232F;--gold:#AD9677;--gold-soft:#F3EEE6;--purple:#A3195B;--purple-soft:#F7E8EF;color-scheme:light}
+  .topbar,.toolbar,.noprint,.example-flag{display:none!important}
+  body{background:#fff}
+  .wrap{max-width:none;padding:0}
+  .sheet{border:0;border-radius:0}
+  .cover,.with,.pill,.track,.scale-bands i,.mk{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .sec,.area{break-inside:avoid-page}
+  .print-only{display:block}
+}
+</style>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">IAGAIN<small>Export Profile · metodo WIFO®</small></div>
+    <span class="wem-badge" id="wemBadge" hidden>Modalità WEM</span>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- INTRO -->
+  <section id="vIntro">
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Export Profile gratuito</div>
+        <h1>Quanto è pronta la tua azienda per l'estero?</h1>
+        <p>Rispondi a 24 domande sulla tua azienda. Ricevi subito il tuo grado di maturità export, i punti di forza e di debolezza nelle 4 aree che contano per un buyer estero, e quanto potresti crescere con il supporto di IAGAIN.</p>
+        <ul class="facts">
+          <li><b>24</b>domande</li>
+          <li><b>8</b>minuti circa</li>
+          <li><b>4</b>aree valutate</li>
+        </ul>
+        <div class="cta-row">
+          <button class="btn btn-primary" id="startBtn" type="button">Inizia il questionario</button>
+          <button class="btn btn-ghost" id="exampleBtn" type="button">Guarda un profilo d'esempio</button>
+        </div>
+        <p class="draft-note" id="draftNote" hidden>Hai un questionario lasciato a metà. <a href="#" id="resumeLink">Riprendi da dove eri rimasto</a>.</p>
+      </div>
+      <div class="ladder" aria-label="I 5 gradi di maturità export">
+        <h3>I 5 gradi di maturità export</h3>
+        <div class="rung"><span class="n">4,2–5</span><div><div class="nm">Campione</div><div class="ds">Export maturo e presidiato</div></div></div>
+        <div class="rung"><span class="n">3,4–4,2</span><div><div class="nm">Esperto</div><div class="ds">Pronta per nuovi mercati e canali</div></div></div>
+        <div class="rung thr"><span class="n">2,6–3,4</span><div><div class="nm">Specialista</div><div class="ds">Ha le basi per l'estero</div></div></div>
+        <div class="rung"><span class="n">1,8–2,6</span><div><div class="nm">Apprendista</div><div class="ds">Basi parziali, lacune da colmare</div></div></div>
+        <div class="rung"><span class="n">1–1,8</span><div><div class="nm">Esordiente</div><div class="ds">Basi ancora da costruire</div></div></div>
+      </div>
+    </div>
+    <div class="areas4">
+      <div><h3>Comunicazione</h3><p>Come ti presenti a un buyer che non ti conosce.</p></div>
+      <div><h3>Organizzazione interna</h3><p>Chi segue l'export, con quali tempi e lingue.</p></div>
+      <div><h3>Offerta commerciale</h3><p>Prodotto, certificazioni e condizioni di vendita.</p></div>
+      <div><h3>Esperienza internazionale</h3><p>Fiere, Incoterms, spedizioni, pagamenti, aspettative.</p></div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="vQuiz" hidden>
+    <div class="quiz-head">
+      <div class="row"><h2 id="stepTitle"></h2><span class="cnt" id="stepCount"></span></div>
+      <div class="steps" id="stepBar"></div>
+    </div>
+    <form id="quizForm" novalidate>
+      <p class="step-intro" id="stepIntro"></p>
+      <div id="stepBody"></div>
+      <p class="err" id="stepErr" hidden></p>
+      <div class="nav">
+        <button class="btn btn-ghost" type="button" id="prevBtn">Indietro</button>
+        <button class="btn btn-primary" type="submit" id="nextBtn">Avanti</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- PROFILE -->
+  <section id="vProfile" hidden>
+    <div class="toolbar">
+      <div class="l">
+        <button class="btn btn-ghost" type="button" id="editBtn">Modifica le risposte</button>
+        <button class="btn btn-ghost" type="button" id="newBtn">Nuovo questionario</button>
+      </div>
+      <div class="r">
+        <button class="btn btn-ghost" type="button" id="copyBtn" hidden>Copia dati per il CRM</button>
+        <button class="btn btn-primary" type="button" id="printBtn" hidden>Scarica in PDF</button>
+      </div>
+    </div>
+    <div id="exampleFlag" class="example-flag" hidden>Questo è un <b>profilo d'esempio</b> di un'azienda inventata, per mostrarti cosa riceverai. <a href="#" id="startFromExample">Compila il tuo questionario</a>.</div>
+    <textarea class="copybox noprint" id="copyFallback" hidden readonly aria-label="Dati per il CRM"></textarea>
+    <article class="sheet" id="sheet"></article>
+  </section>
+</main>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+/* =========================================================
+   CONFIGURAZIONE — modificare qui
+   ========================================================= */
+const CONFIG = {
+  // URL di un webhook (Make, n8n, Zapier...) che riceve i dati del lead in JSON a fine questionario.
+  // Vuoto = nessun invio. Da lì si crea il contatto su Brevo e si avvia la sequenza email.
+  webhookUrl: "",
+  rtwBooking: "https://meet.brevo.com/iagain/road-to-world",
+  rtwLanding: "https://www.iagain.it/roadtoworld",
+  eoBooking: "https://meet.brevo.com/iagain",
+  site: "https://www.iagain.it",
+  privacyUrl: "https://www.iagain.it/privacy-policy/", // verificare l'indirizzo esatto della privacy policy
+  threshold: 3 // livello minimo export
+};
+
+/* Facilità di vendita della categoria sui mercati esteri (1 = difficile, 5 = facile).
+   Punteggio = (2 x Concorrenza + Barriere + Logistica) / 4, arrotondato al mezzo punto.
+   Concorrenza: valore export italiano 2025 (Istat/MAECI): >5 mld=1, 2-5=2, 1-2=3, 0,3-1=4, <0,3=5.
+   Barriere: restrizioni sanitarie/regolatorie nei principali mercati extra-UE. Logistica: deperibilità e catena del freddo.
+   Olio: concorrenza corretta a 1 (valutazione IAGAIN: migliaia di micro produttori e concorrenza di Spagna, Grecia, Tunisia). */
+const CATEGORIES = {
+  "Olio extravergine d'oliva": 3,
+  "Vino": 2.5,
+  "Pasta": 3.5,
+  "Conserve, sughi e sottoli": 3,
+  "Formaggi e latticini": 1.5,
+  "Salumi": 2,
+  "Prodotti da forno e dolci": 2.5,
+  "Birra, liquori e distillati": 3.5,
+  "Miele, confetture e creme": 4.5,
+  "Legumi, cereali e farine": 4,
+  "Ortofrutta fresca": 1.5,
+  "Caffè": 3.5,
+  "Surgelati e piatti pronti": 2.5,
+  "Altro": 3
+};
+
+const AREAS = [
+  {id:"com", name:"Comunicazione", desc:"Il primo impatto che il buyer ha della tua azienda è determinante. Valutiamo i materiali con cui ti presenti, la loro qualità e se sono utilizzabili all'estero, almeno in inglese."},
+  {id:"org", name:"Organizzazione interna", desc:"Una struttura organizzata risponde prontamente ed efficacemente ai buyer. Valutiamo chi segue l'export, i tempi di risposta, le lingue e quanto regge la capacità produttiva."},
+  {id:"off", name:"Offerta commerciale", desc:"Prodotto e condizioni di vendita devono essere pronti per un importatore. Valutiamo distintività, affollamento della categoria, certificazioni, formati e politica commerciale."},
+  {id:"esp", name:"Esperienza internazionale", desc:"L'export non si improvvisa e chiede tempo e investimenti. Valutiamo cosa sai già fare e quanto sono realistiche le aspettative su tempi e budget."}
+];
+
+/* Domande. Per le risposte singole il punteggio è il valore v (1–5). */
+const o = (...labels) => labels.map((t,i)=>({t, v:i+1}));
+const QUESTIONS = {
+  com1:{step:"com", text:"Quali materiali usi per presentare l'azienda a un nuovo cliente?", opts:o(
+    "Nessuno, ci presentiamo a voce o con il sito",
+    "Qualcosa fatto in casa, solo in italiano",
+    "Catalogo o brochure curati, solo in italiano",
+    "Catalogo o brochure curati, anche in inglese",
+    "Company profile e catalogo professionali in inglese e in altre lingue")},
+  com2:{step:"com", text:"Com'è il tuo sito web?", opts:o(
+    "Non abbiamo un sito",
+    "C'è, ma è datato o poco curato",
+    "È curato, ma solo in italiano",
+    "È curato e tradotto in inglese",
+    "Multilingue, aggiornato, con una sezione per i professionisti (B2B / export)")},
+  com3:{step:"com", text:"Come descriveresti il marchio e le confezioni dei tuoi prodotti?", opts:o(
+    "Non abbiamo un nostro marchio (vendiamo sfuso o per conto terzi)",
+    "Etichetta semplice, senza una vera identità di marca",
+    "Marchio e confezioni curati, pensati per il mercato italiano",
+    "Marchio riconoscibile, confezioni che raccontano territorio e prodotto",
+    "Confezioni già adattate all'estero (testi in inglese, formati, informazioni nutrizionali)")},
+  com4:{step:"com", text:"Hai schede tecniche dei prodotti?", opts:o(
+    "No",
+    "Sì, essenziali e solo in italiano",
+    "Sì, complete ma solo in italiano",
+    "Sì, in inglese ma senza dati logistici",
+    "Sì, in inglese con dati logistici (pallettizzazione, shelf life, EAN, dimensioni)")},
+  com5:{step:"com", text:"Che listino prezzi usi?", opts:o(
+    "Nessun listino, facciamo i prezzi caso per caso",
+    "Solo prezzi al pubblico o per il nostro punto vendita",
+    "Un listino all'ingrosso per i clienti italiani",
+    "Un listino export in inglese, con prezzi franco azienda",
+    "Un listino export con Incoterms, minimi d'ordine, sconti per volumi e tempi di consegna")},
+  com6:{step:"com", text:"Se domani dovessi scrivere a un importatore in Germania, cosa useresti?", opts:o(
+    "Non saprei da dove iniziare",
+    "Una mail in italiano",
+    "Una mail tradotta al momento, anche con il traduttore automatico",
+    "Una mail di presentazione in inglese già pronta",
+    "Mail e presentazioni diverse per importatori, distributori e ristorazione, in più lingue")},
+  com7:{step:"com", text:"Come usi i social per l'azienda?", opts:o(
+    "Non abbiamo profili aziendali",
+    "Ci sono, ma li aggiorniamo raramente",
+    "Pubblichiamo con una certa regolarità, in italiano",
+    "Pubblichiamo regolarmente, con foto e contenuti curati",
+    "Pubblichiamo regolarmente anche in inglese e usiamo LinkedIn per i contatti professionali")},
+
+  org1:{step:"org", text:"Chi segue (o seguirebbe) l'export in azienda?", opts:o(
+    "Nessuno, non abbiamo tempo",
+    "Il titolare, nei ritagli di tempo",
+    "Una persona interna che si occupa anche di altro",
+    "Una persona dedicata almeno in parte, che parla inglese",
+    "Una persona o un ufficio dedicati all'export, con le lingue")},
+  org2:{step:"org", text:"Arriva una mail in inglese da un buyer con alcune domande. In quanto tempo rispondi di solito?", opts:o(
+    "Oltre una settimana, o rischia di restare senza risposta",
+    "Entro una settimana",
+    "In 3-4 giorni",
+    "Entro 48 ore",
+    "In giornata")},
+  org3:{step:"org", text:"Chi in azienda parla inglese?", opts:o(
+    "Nessuno",
+    "Qualcuno, a livello scolastico",
+    "Qualcuno se la cava per scrivere una mail",
+    "Almeno una persona lo parla bene, anche al telefono",
+    "Più persone, e anche altre lingue")},
+  org4:{step:"org", text:"Se domani arrivasse un ordine estero di un intero bancale (pallet), riusciresti a evaderlo?", opts:o(
+    "No, non abbiamo questa capacità",
+    "Sì, ma con molta fatica e tempi lunghi",
+    "Sì, in qualche settimana",
+    "Sì, nei nostri tempi normali",
+    "Sì, abbiamo scorte e capacità pianificate anche per ordini più grandi")},
+  org5:{step:"org", text:"Quanto tempo potete dedicare all'export ogni settimana, tra titolari e collaboratori?", opts:o(
+    "Al momento nessuno",
+    "Meno di 2 ore",
+    "Da 2 a 5 ore",
+    "Da 5 a 15 ore",
+    "Più di 15 ore, o una persona dedicata")},
+
+  off1:{step:"off", text:"Cosa distingue i tuoi prodotti da quelli dei concorrenti?", opts:o(
+    "Niente di particolare, sono prodotti tradizionali come tanti",
+    "La qualità, ma è difficile spiegare perché",
+    "La qualità e il legame con il territorio, e sappiamo raccontarli",
+    "Un elemento concreto: ricetta, materia prima, lavorazione, certificazione o premio",
+    "Più elementi concreti e riconosciuti: premi, guide, certificazioni, un prodotto unico")},
+  off3:{step:"off", text:"Hai condizioni di vendita definite (minimi d'ordine, sconti, pagamenti)?", opts:o(
+    "No, decidiamo di volta in volta",
+    "Solo il prezzo",
+    "Il prezzo e un minimo d'ordine",
+    "Condizioni scritte complete: prezzi, minimi, sconti, pagamenti",
+    "Condizioni diverse per canale: importatore, distributore, ristorazione, grande distribuzione")},
+  off4:{step:"off", multi:true, text:"Quali certificazioni o documenti hai?", hint:"Scegli tutti quelli che hai.", opts:[
+    {t:"Biologico", k:"bio", w:1},
+    {t:"DOP, IGP, DOC o DOCG", k:"dop", w:1},
+    {t:"IFS, BRC, ISO 22000 o FSSC 22000", k:"ifs", w:1.5},
+    {t:"Halal o Kosher", k:"hal", w:.5},
+    {t:"Analisi di laboratorio recenti sui prodotti", k:"lab", w:.5},
+    {t:"Registrazione FDA (Stati Uniti)", k:"fda", w:.5},
+    {t:"Nessuna, oltre all'HACCP obbligatorio", k:"none", w:0, excl:true}]},
+  off5:{step:"off", text:"Quali formati e personalizzazioni puoi offrire?", opts:o(
+    "Un solo formato",
+    "Pochi formati, per la vendita al dettaglio",
+    "Più formati per la vendita al dettaglio",
+    "Formati per il dettaglio e per la ristorazione (Ho.Re.Ca.)",
+    "Dettaglio, ristorazione e personalizzazioni o marchio del cliente (private label)")},
+
+  esp1:{step:"esp", text:"Hai partecipato a fiere di settore?", opts:o(
+    "Mai",
+    "Solo a eventi o sagre locali",
+    "A fiere nazionali come visitatore (es. Vinitaly, Cibus, TuttoFood)",
+    "A fiere nazionali come espositore",
+    "A fiere internazionali, in Italia o all'estero, come espositore")},
+  esp2:{step:"esp", text:"Sigle come EXW, FCA o DAP ti dicono qualcosa?", opts:o(
+    "Mai sentite",
+    "Le ho sentite, ma non saprei usarle",
+    "So cosa significano",
+    "Le uso nelle offerte ai clienti",
+    "Le uso e so calcolare quanto costano trasporto e dogana per ciascuna")},
+  esp3:{step:"esp", text:"Hai già spedito all'estero?", opts:o(
+    "Mai",
+    "Solo pacchi o campioni con il corriere",
+    "Qualche spedizione, con l'aiuto di qualcuno",
+    "Spedizioni di bancali con uno spedizioniere di fiducia",
+    "Spedizioni regolari, anche container o groupage, con i documenti doganali")},
+  esp4:{step:"esp", text:"Vendi già all'estero?", opts:o(
+    "No",
+    "Solo occasionalmente, a privati o turisti",
+    "Uno o due clienti esteri, non regolari",
+    "Clienti esteri regolari in 1-2 paesi",
+    "Export continuativo in 3 o più paesi")},
+  esp5:{step:"esp", text:"Come ti faresti pagare da un nuovo cliente estero?", opts:o(
+    "Non saprei",
+    "Come faccio con i clienti italiani",
+    "Pagamento anticipato, sempre",
+    "Anticipato al primo ordine, poi bonifico a scadenza",
+    "Valuto anche lettera di credito o assicurazione del credito, in base al cliente e al paese")},
+  esp6a:{step:"esp", text:"Secondo te, dopo quanto tempo arrivano ordini continuativi da un nuovo mercato estero?", opts:[
+    {t:"1-3 mesi", v:1},{t:"3-6 mesi", v:2},{t:"6-12 mesi", v:4},{t:"12-24 mesi", v:5},{t:"Non ne ho idea", v:2}]},
+  esp6b:{step:"esp", text:"Quanto saresti disposto a investire nell'export nel primo anno (consulenza, campioni, fiere, materiali)?", opts:o(
+    "Nulla, finché non arrivano risultati",
+    "Fino a 2.000 €",
+    "Da 2.000 a 5.000 €",
+    "Da 5.000 a 15.000 €",
+    "Oltre 15.000 €")}
+};
+
+const MARKETS = ["Germania","Austria e Svizzera","Francia","Benelux","Paesi nordici","Regno Unito","Europa dell'Est","Stati Uniti","Canada","Giappone","Corea del Sud","Cina e Hong Kong","Sud-Est asiatico","Medio Oriente","Australia","Non saprei"];
+
+/* Indicatori (lo scenario con IAGAIN è in SCENARIOS) */
+const INDICATORS = [
+  {id:"com1", area:"com", label:"Materiali di presentazione",
+   strong:"Materiali di presentazione curati e già disponibili in inglese.",
+   weak:"Mancano materiali di presentazione professionali da usare con un buyer estero.",
+   sugg:"Prepara un company profile breve (4-6 pagine) e un catalogo in inglese: sono la prima cosa che un importatore chiede."},
+  {id:"com2", area:"com", label:"Sito web",
+   strong:"Sito curato e leggibile anche da un buyer straniero.",
+   weak:"Il sito non supera il controllo che ogni buyer fa prima di rispondere.",
+   sugg:"Il buyer ti cerca online prima di rispondere: serve almeno una versione in inglese con storia, prodotti e un contatto per l'export."},
+  {id:"com3", area:"com", label:"Marchio e confezioni",
+   strong:"Marchio e confezioni con un'identità chiara, riconoscibile a scaffale.",
+   weak:"L'identità di marca è debole: il prodotto rischia di confondersi con decine di altri prodotti italiani.",
+   sugg:"Scegli pochi elementi distintivi (storia, territorio, materia prima) e portali su etichetta e materiali."},
+  {id:"com4", area:"com", label:"Schede tecniche",
+   strong:"Schede tecniche complete e in inglese, pronte per l'ufficio acquisti di un importatore.",
+   weak:"Mancano schede tecniche complete in inglese: senza, un importatore non può valutare il prodotto.",
+   sugg:"Per ogni prodotto servono ingredienti, valori nutrizionali, shelf life, conservazione, EAN e pallettizzazione, in inglese."},
+  {id:"com5", area:"com", label:"Listino prezzi",
+   strong:"Listino export strutturato, con condizioni chiare.",
+   weak:"Non c'è un listino pensato per l'estero: i prezzi si costruiscono a ogni richiesta, con perdita di tempo e credibilità.",
+   sugg:"Un listino export parte dal prezzo franco azienda (EXW) e indica minimi d'ordine, formati e tempi di consegna."},
+  {id:"com6", area:"com", label:"Presentazione ai buyer",
+   strong:"Hai già una presentazione commerciale pronta per i buyer.",
+   weak:"Manca una presentazione commerciale efficace, e il primo contatto è il momento in cui si perde la maggior parte dei buyer.",
+   sugg:"Bastano poche righe in inglese: chi sei, cosa ti distingue, cosa proponi a quel tipo di cliente."},
+  {id:"com7", area:"com", label:"Presenza sui social",
+   strong:"Presenza social attiva: il buyer trova un'azienda viva.",
+   weak:"Senza una presenza social curata il buyer non ha modo di verificare che l'azienda sia attiva.",
+   sugg:"Bastano 1-2 post a settimana con foto vere di prodotti, persone e territorio. LinkedIn è il canale dei buyer."},
+
+  {id:"org1", area:"org", label:"Chi segue l'export",
+   strong:"C'è una persona dedicata all'export.",
+   weak:"L'export non ha una persona dedicata: senza continuità i contatti con i buyer si raffreddano.",
+   sugg:"Serve qualcuno che segua i buyer con costanza, interno all'azienda oppure in outsourcing."},
+  {id:"org2", area:"org", label:"Tempi di risposta",
+   strong:"Tempi di risposta rapidi, un vantaggio concreto con i buyer.",
+   weak:"Tempi di risposta lenti, che per un buyer estero sono il primo segnale di inaffidabilità.",
+   sugg:"Datti una regola: risposta entro 48 ore, anche solo per dire quando arriveranno le informazioni."},
+  {id:"org3", area:"org", label:"Lingue straniere",
+   strong:"In azienda c'è chi gestisce bene l'inglese.",
+   weak:"Le lingue sono un limite: ogni scambio con un buyer diventa lento e faticoso.",
+   sugg:"Almeno una persona deve poter sostenere una call in inglese, oppure va affiancata."},
+  {id:"org4", area:"org", label:"Capacità produttiva",
+   strong:"Capacità produttiva in grado di reggere ordini export.",
+   weak:"Capacità produttiva o scorte non reggono ancora un ordine export standard.",
+   sugg:"Calcola quanta produzione puoi riservare all'estero ogni anno: è una delle prime domande di un importatore."},
+  {id:"org5", area:"org", label:"Tempo per l'export",
+   strong:"L'azienda può dedicare all'export un tempo costante ogni settimana.",
+   weak:"Il tempo dedicabile all'export è poco: senza continuità i buyer si perdono.",
+   sugg:"Anche in un'azienda piccola bastano poche ore fisse a settimana, purché costanti; il resto si può affidare a un ufficio export esterno."},
+
+  {id:"off1", area:"off", label:"Distintività del prodotto",
+   strong:"Il prodotto ha elementi distintivi concreti da far valere con i buyer.",
+   weak:"Il prodotto non ha ancora un elemento distintivo chiaro, e con il buyer la conversazione scivola subito sul prezzo.",
+   sugg:"Individua 2-3 fatti verificabili che rendono unico il prodotto e mettili al centro di ogni presentazione."},
+  {id:"off2", area:"off", label:"Affollamento della categoria", derived:true,
+   strong:"La tua categoria ha spazio sui mercati esteri, con meno concorrenza della media.",
+   weak:"La tua categoria è molto affollata all'estero: tanti produttori italiani si contendono gli stessi buyer.",
+   sugg:"In una categoria affollata vince chi sceglie bene mercati e canali: meglio pochi mercati mirati che una lista generica."},
+  {id:"off3", area:"off", label:"Condizioni di vendita",
+   strong:"Condizioni di vendita definite e chiare.",
+   weak:"Mancano condizioni di vendita definite (minimi, sconti, pagamenti), e ogni trattativa riparte da zero.",
+   sugg:"Scrivi le tue condizioni: minimo d'ordine, sconti per volume, termini di pagamento e di consegna."},
+  {id:"off4", area:"off", label:"Certificazioni",
+   strong:"Certificazioni che aprono porte, anche nei mercati più esigenti.",
+   weak:"Poche certificazioni: alcuni canali, come la grande distribuzione, e alcuni mercati, come Asia e Stati Uniti, restano più difficili.",
+   sugg:"Tieni pronte analisi di laboratorio recenti e valuta le certificazioni richieste nei mercati che ti interessano."},
+  {id:"off5", area:"off", label:"Formati e personalizzazioni",
+   strong:"Gamma di formati adatta a più canali.",
+   weak:"Gamma di formati ridotta: alcuni canali, come la ristorazione, chiedono formati diversi.",
+   sugg:"Valuta un formato per la ristorazione: all'estero è spesso il canale d'ingresso dei prodotti italiani."},
+
+  {id:"esp1", area:"esp", label:"Fiere ed eventi",
+   strong:"Esperienza di fiere da espositore.",
+   weak:"Poca esperienza di fiere di settore, dove si incontra buona parte dei buyer.",
+   sugg:"Prima di esporre, visita una fiera di settore con un obiettivo preciso: capire chi compra e a quali prezzi."},
+  {id:"esp2", area:"esp", label:"Incoterms",
+   strong:"Buona padronanza degli Incoterms.",
+   weak:"Gli Incoterms non sono familiari, ed è proprio lì che nascono i malintesi su costi e responsabilità.",
+   sugg:"Parti da EXW e FCA: chiariscono chi paga il trasporto e chi risponde della merce, e fino a dove."},
+  {id:"esp3", area:"esp", label:"Spedizioni",
+   strong:"Esperienza concreta di spedizioni internazionali.",
+   weak:"Poca esperienza di spedizioni internazionali e di documenti doganali.",
+   sugg:"Individua uno spedizioniere di riferimento e fatti preparare un preventivo tipo per un bancale verso un paese europeo."},
+  {id:"esp4", area:"esp", label:"Vendite all'estero",
+   strong:"Vendite estere già avviate con continuità.",
+   weak:"Non ci sono ancora vendite estere strutturate: i mercati vanno costruiti da zero.",
+   sugg:"Le prime vendite servono a imparare: meglio pochi mercati seguiti bene."},
+  {id:"esp5", area:"esp", label:"Pagamenti internazionali",
+   strong:"Buona conoscenza degli strumenti di pagamento internazionali.",
+   weak:"Poca familiarità con i pagamenti internazionali, e il rischio di insoluti è reale.",
+   sugg:"Al primo ordine chiedi il pagamento anticipato; per ordini ripetuti valuta un'assicurazione del credito."},
+  {id:"esp6", area:"esp", label:"Aspettative su tempi e budget", derived:true,
+   strong:"Aspettative realistiche su tempi e investimenti.",
+   weak:"Aspettative poco realistiche su tempi o investimenti: è la prima causa di abbandono dei progetti export.",
+   sugg:"Un mercato estero si costruisce in 12-24 mesi. Meglio partire con un test a costo contenuto che con un grande investimento e l'attesa di ritorni immediati."}
+];
+
+/* Scenario per servizio: livello a cui sale l'indicatore e cosa fa IAGAIN (dalla Guida ai servizi WIFO, settembre 2026).
+   Indicatori non elencati = dipendono dall'azienda, restano invariati. */
+const SCENARIOS = {
+  rtw:{ name:"Road to World", short:"con Road to World", items:{
+    com4:[4,"Ti assistiamo nel completare le schede tecniche in inglese con i dati che i buyer chiedono."],
+    com5:[4,"Ti assistiamo nell'impostare un listino utilizzabile con i buyer dei mercati del test."],
+    com6:[5,"Il WEM presenta la tua azienda ai buyer dei 3-5 mercati scelti, in inglese."],
+    org1:[4,"Per 4 mesi il WEM segue al posto tuo i buyer dei mercati del test."],
+    org2:[4,"Il WEM risponde ai buyer nei tempi che il mercato si aspetta."],
+    org3:[4,"La corrispondenza con i buyer passa dal WEM."],
+    off3:[3,"Ti aiutiamo a fissare minimi d'ordine e condizioni base per le prime richieste."],
+    esp2:[4,"Le prime offerte ai buyer partono con gli Incoterms corretti, e ti spieghiamo come leggerli."],
+    esp3:[3,"Ti guidiamo nell'invio delle campionature."],
+    esp5:[4,"Ti indichiamo termini di pagamento sicuri per i primi ordini."]
+  }},
+  eo:{ name:"WIFO Export Office", short:"con WIFO Export Office", items:{
+    com4:[5,"Il WEM prepara schede tecniche in inglese complete di dati logistici e segue adeguamenti di etichetta e documentazione."],
+    com5:[5,"Il WEM costruisce listini franco destino in lingua, con minimi d'ordine e condizioni."],
+    com6:[5,"Il WEM prepara cataloghi e presentazioni in lingua e presenta l'azienda ai buyer con continuità."],
+    org1:[5,"Il WEM diventa per 12 mesi il tuo ufficio export: una persona dedicata, con le lingue, che lavora sui tuoi mercati."],
+    org2:[4,"Il WEM risponde ai buyer nei tempi che il mercato si aspetta."],
+    org3:[4,"La corrispondenza con i buyer passa dal WEM, in inglese e nelle lingue dei mercati."],
+    off3:[4,"Definiamo con te condizioni di vendita per l'estero, differenziate per canale."],
+    esp1:[4,"Con l'add-on Fiera internazionale il WEM è allo stand con te, con appuntamenti preparati in anticipo."],
+    esp2:[5,"Il WEM gestisce offerte e trattative con gli Incoterms corretti."],
+    esp3:[4,"Il WEM segue campionature, documenti e spedizioni, fino al riordino."],
+    esp5:[5,"Impostiamo termini di pagamento sicuri e, quando serve, coperture assicurative sul credito."]
+  }}
+};
+
+/* Fattori bloccanti: segnalati a parte, la media non li assorbe */
+const BLOCKERS = [
+  {id:"org4", max:1, title:"Capacità produttiva", text:"Oggi non riesci a evadere un ordine export di un bancale. Prima di cercare buyer serve capire quanta produzione puoi riservare all'estero."},
+  {id:"org5", max:1, title:"Tempo per l'export", text:"Non hai tempo da dedicare all'export. Anche con un WEM che lavora per te, servono risposte rapide su prezzi, campioni e produzione."},
+  {id:"esp6b", max:1, raw:true, title:"Budget", text:"Non prevedi alcun investimento prima di vedere risultati. Ogni percorso export, anche un test, richiede un investimento iniziale in materiali, campioni e presidio."}
+];
+
+const LEVELS = [
+  {min:1,   name:"Esordiente",  text:"L'azienda non ha ancora le basi per presentarsi all'estero. Prima di cercare buyer servono materiali, condizioni di vendita e un minimo di organizzazione."},
+  {min:1.8, name:"Apprendista", text:"Alcune basi ci sono, ma restano lacune che con i buyer si pagano. È il momento giusto per testare i mercati con un investimento contenuto, imparando sul campo."},
+  {min:2.6, name:"Specialista", text:"L'azienda ha le basi per lavorare con l'estero. Per avere risultati continui servono metodo, costanza e una persona che segua i buyer."},
+  {min:3.4, name:"Esperto",     text:"L'azienda è pronta per l'export. Il margine di crescita sta nell'aprire nuovi mercati e canali con un presidio commerciale strutturato."},
+  {min:4.2, name:"Campione",    text:"Profilo export maturo. La crescita passa dalla scelta di nuovi mercati e dal presidio costante di quelli esistenti."}
+];
+
+const STEPS = [
+  {id:"anag", title:"La tua azienda", intro:"Partiamo dai dati essenziali. Li usiamo per intestare il tuo Export Profile e per ricontattarti, se lo desideri."},
+  {id:"com", title:"Comunicazione", intro:"Come ti presenti a un buyer estero che non ti conosce. Rispondi pensando a come sono le cose oggi, non a come vorresti che fossero."},
+  {id:"org", title:"Organizzazione interna", intro:"Chi segue l'export e come risponde l'azienda alle richieste."},
+  {id:"off", title:"Offerta commerciale", intro:"Prodotto, certificazioni e condizioni di vendita."},
+  {id:"esp", title:"Esperienza internazionale", intro:"Cosa hai già fatto sull'estero e cosa ti aspetti."}
+];
+
+/* SAMPLE (azienda inventata) */
+const SAMPLE = {
+  azienda:"Oleificio Esempio", referente:"Mario Rossi", ruolo:"Titolare", email:"esempio@example.com", telefono:"000 0000000", regione:"Puglia", sito:"", categoria:"Olio extravergine d'oliva",
+  com1:2, com2:3, com3:3, com4:2, com5:3, com6:2, com7:2,
+  org1:2, org2:3, org3:2, org4:3, org5:2,
+  off1:4, off3:2, off4:["bio","lab"], off5:2,
+  esp1:3, esp2:2, esp3:2, esp4:2, esp5:3, esp6a:5, esp6b:2,
+  mercati:["Germania","Paesi nordici","Stati Uniti"], privacy:true
+};
+
+/* =========================================================
+   STATO
+   ========================================================= */
+const state = { ans:{}, step:0, sample:false, overrides:{}, notes:{}, wemName:"", sent:false };
+const WEM = () => location.hash === "#wem";
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmt = n => (Math.round(n*10)/10).toFixed(1).replace(".", ",");
+const avg = a => a.reduce((s,x)=>s+x,0)/a.length;
+const DRAFT_KEY = "iagain-export-profile-draft";
+function saveDraft(){ try{ localStorage.setItem(DRAFT_KEY, JSON.stringify({ans:state.ans, step:state.step})) }catch(e){} }
+function loadDraft(){ try{ return JSON.parse(localStorage.getItem(DRAFT_KEY)||"null") }catch(e){ return null } }
+function clearDraft(){ try{ localStorage.removeItem(DRAFT_KEY) }catch(e){} }
+
+/* =========================================================
+   CALCOLO
+   ========================================================= */
+function rawScore(id, a){
+  if(id==="off2") return CATEGORIES[a.categoria] ?? 3;
+  if(id==="esp6") return avg([a.esp6a, a.esp6b]);
+  if(id==="off4"){
+    const sel = a.off4 || [];
+    if(!sel.length || sel.includes("none")) return 1;
+    const s = 1 + QUESTIONS.off4.opts.filter(x=>sel.includes(x.k)).reduce((t,x)=>t+x.w,0);
+    return Math.min(5, s);
+  }
+  return a[id];
+}
+function compute(a, overrides={}, svc){
+  const ind = {};
+  INDICATORS.forEach(d=>{ const base = overrides[d.id] ?? rawScore(d.id, a); ind[d.id] = {def:d, v:base, w:base}; });
+  if(svc===undefined){
+    const tmp = {ind, total:avg(AREAS.map(ar=>avg(INDICATORS.filter(d=>d.area===ar.id).map(d=>ind[d.id].v))))};
+    svc = recommend(tmp);
+  }
+  const sc = SCENARIOS[svc];
+  INDICATORS.forEach(d=>{ const it = sc.items[d.id]; const x = ind[d.id]; x.svcTarget = it ? it[0] : null; x.uplift = it ? it[1] : ""; if(it) x.w = Math.max(x.v, it[0]); });
+  const areas = AREAS.map(ar=>{
+    const list = INDICATORS.filter(d=>d.area===ar.id).map(d=>ind[d.id]);
+    return {...ar, list, v:avg(list.map(x=>x.v)), w:avg(list.map(x=>x.w))};
+  });
+  const total = avg(areas.map(x=>x.v)), totalW = avg(areas.map(x=>x.w));
+  const blockers = BLOCKERS.filter(b=> (b.raw ? a[b.id] : ind[b.id]?.v) !== undefined && (b.raw ? a[b.id] : ind[b.id].v) <= b.max);
+  return {ind, areas, total, totalW, level:levelOf(total), levelW:levelOf(totalW), svc, sc, blockers};
+}
+function levelOf(s){ let L=LEVELS[0]; LEVELS.forEach(l=>{ if(s>=l.min-1e-9) L=l }); return L; }
+function status(v){
+  if(v>=4) return {c:"top", t:"Punto di forza"};
+  if(v>=CONFIG.threshold) return {c:"ok", t:"In linea"};
+  if(v>=2.5) return {c:"warn", t:"Sotto soglia"};
+  return {c:"bad", t:"Da costruire"};
+}
+function recommend(r){
+  const e4 = r.ind.esp4.v;
+  return (e4 <= 2 || r.total < 2.6) ? "rtw" : "eo";
+}
+
+/* =========================================================
+   QUESTIONARIO
+   ========================================================= */
+function visibleIds(){ return Object.keys(QUESTIONS).filter(id=>!(id==="com2" && state.ans.nosito)); }
+function stepQuestions(stepId){ return Object.entries(QUESTIONS).filter(([id,q])=>q.step===stepId && visibleIds().includes(id)); }
+function qNumber(id){ return visibleIds().indexOf(id)+1; }
+
+function renderStep(){
+  const st = STEPS[state.step];
+  $("#stepTitle").textContent = st.title;
+  $("#stepCount").textContent = `Passo ${state.step+1} di ${STEPS.length}`;
+  $("#stepBar").innerHTML = STEPS.map((s,i)=>`<span class="${i<state.step?'done':i===state.step?'cur':''}"></span>`).join("");
+  $("#stepIntro").textContent = st.intro;
+  $("#prevBtn").textContent = state.step===0 ? "Torna all'inizio" : "Indietro";
+  $("#nextBtn").textContent = state.step===STEPS.length-1 ? "Vedi il mio Export Profile" : "Avanti";
+  $("#stepErr").hidden = true;
+  const a = state.ans;
+  let h = "";
+  if(st.id==="anag"){
+    const cats = Object.keys(CATEGORIES).map(c=>`<option ${a.categoria===c?"selected":""}>${esc(c)}</option>`).join("");
+    h = `<div class="fields">
+      ${field("azienda","Nome dell'azienda",true,"text","organization")}
+      ${field("referente","Nome e cognome",true,"text","name")}
+      ${field("ruolo","Ruolo in azienda",false,"text","organization-title")}
+      ${field("email","Email",true,"email","email")}
+      ${field("telefono","Telefono",true,"tel","tel")}
+      ${field("regione","Regione",false,"text","address-level1")}
+      <div class="field" data-req="sito"><label for="f-sito">Sito web</label><input id="f-sito" name="sito" type="text" autocomplete="url" placeholder="www.tuaazienda.it" value="${esc(a.sito||"")}" ${a.nosito?"disabled":""}>
+        <label class="check" for="f-nosito" style="margin-top:4px"><input type="checkbox" id="f-nosito" name="nosito" ${a.nosito?"checked":""}><span>Non abbiamo un sito</span></label></div>
+      <div class="field" data-req="categoria"><label for="f-categoria">Categoria principale dei tuoi prodotti</label>
+        <select id="f-categoria" name="categoria"><option value="">Scegli…</option>${cats}</select></div>
+      <div class="field full" data-req="privacy">
+        <label class="check" for="f-privacy"><input type="checkbox" id="f-privacy" name="privacy" ${a.privacy?"checked":""}>
+        <span>Ho letto l'<a href="${esc(CONFIG.privacyUrl)}" target="_blank" rel="noopener">informativa privacy</a> e acconsento al trattamento dei miei dati per ricevere l'Export Profile ed essere ricontattato da IAGAIN.</span></label>
+      </div>
+      <div class="field full">
+        <label class="check" for="f-marketing"><input type="checkbox" id="f-marketing" name="marketing" ${a.marketing?"checked":""}>
+        <span>Desidero ricevere comunicazioni di IAGAIN su mercati esteri, bandi e servizi (facoltativo).</span></label>
+      </div>
+    </div>`;
+  } else {
+    h = stepQuestions(st.id).map(([id,q])=>{
+      const name = "q-"+id;
+      const opts = q.opts.map((op,i)=>{
+        const oid = `${name}-${i}`;
+        if(q.multi){
+          const ck = (a[id]||[]).includes(op.k) ? "checked":"";
+          return `<label class="opt" for="${oid}"><input type="checkbox" id="${oid}" name="${name}" value="${op.k}" ${ck} ${op.excl?'data-excl="1"':''}><span>${esc(op.t)}</span></label>`;
+        }
+        const ck = a[id]===op.v && (a[id+"_i"]===undefined || a[id+"_i"]===i) ? "checked":"";
+        return `<label class="opt" for="${oid}"><input type="radio" id="${oid}" name="${name}" value="${i}" ${ck}><span>${esc(op.t)}</span></label>`;
+      }).join("");
+      return `<fieldset data-q="${id}"><legend><span class="qn">${qNumber(id)}</span>${esc(q.text)}</legend>${q.hint?`<p class="hint">${esc(q.hint)}</p>`:""}<div class="opts">${opts}</div></fieldset>`;
+    }).join("");
+    if(st.id==="esp"){
+      h += `<fieldset data-q="mercati"><legend><span class="qn">${visibleIds().length+1}</span>Su quali mercati ti piacerebbe vendere?</legend><p class="hint">Facoltativo. Non entra nel punteggio, ci aiuta a capire i tuoi obiettivi.</p>
+        <div class="opts" style="grid-template-columns:repeat(auto-fill,minmax(190px,1fr))">${MARKETS.map((m,i)=>`<label class="opt" for="mk-${i}"><input type="checkbox" id="mk-${i}" name="mercati" value="${esc(m)}" ${(a.mercati||[]).includes(m)?"checked":""}><span>${esc(m)}</span></label>`).join("")}</div></fieldset>`;
+    }
+  }
+  $("#stepBody").innerHTML = h;
+}
+function field(id,label,req,type,ac){
+  return `<div class="field" ${req?`data-req="${id}"`:""}><label for="f-${id}">${label}${req?"":" <span style='font-weight:400;color:var(--muted)'>(facoltativo)</span>"}</label><input id="f-${id}" name="${id}" type="${type}" autocomplete="${ac}" value="${esc(state.ans[id]||"")}"></div>`;
+}
+function readStep(){
+  const st = STEPS[state.step], a = state.ans, f = $("#quizForm");
+  if(st.id==="anag"){
+    ["azienda","referente","ruolo","email","telefono","regione","sito"].forEach(k=>{ a[k] = (f.elements[k]?.value||"").trim() });
+    a.nosito = f.elements.nosito.checked;
+    if(a.nosito){ a.sito=""; a.com2=1; a.com2_i=0 } else if(a.com2_auto){ delete a.com2; delete a.com2_i }
+    a.com2_auto = a.nosito;
+    a.categoria = f.elements.categoria.value;
+    a.privacy = f.elements.privacy.checked;
+    a.marketing = f.elements.marketing.checked;
+  } else {
+    stepQuestions(st.id).forEach(([id,q])=>{
+      if(q.multi){ a[id] = [...f.querySelectorAll(`input[name="q-${id}"]:checked`)].map(x=>x.value) }
+      else { const c = f.querySelector(`input[name="q-${id}"]:checked`); if(c){ const i=+c.value; a[id]=q.opts[i].v; a[id+"_i"]=i } else { delete a[id]; delete a[id+"_i"] } }
+    });
+    if(st.id==="esp") a.mercati = [...f.querySelectorAll('input[name="mercati"]:checked')].map(x=>x.value);
+  }
+}
+function validateStep(){
+  const st = STEPS[state.step], a = state.ans, missing = [];
+  document.querySelectorAll(".missing").forEach(e=>e.classList.remove("missing"));
+  if(st.id==="anag"){
+    ["azienda","referente","email","telefono","categoria"].forEach(k=>{ if(!a[k]) missing.push(k) });
+    if(a.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(a.email)) missing.push("email");
+    if(a.telefono && (a.telefono.replace(/\D/g,"").length<6)) missing.push("telefono");
+    if(!a.nosito && !/^\S+\.\S{2,}$/.test(a.sito||"")) missing.push("sito");
+    if(!a.privacy) missing.push("privacy");
+    missing.forEach(k=>{ const el=document.querySelector(`[data-req="${k}"]`); el&&el.classList.add("missing"); el&&k==="privacy"&&el.querySelector(".check").classList.add("missing") });
+  } else {
+    stepQuestions(st.id).forEach(([id,q])=>{
+      const ok = q.multi ? (a[id]||[]).length>0 : a[id]!==undefined;
+      if(!ok){ missing.push(id); document.querySelector(`[data-q="${id}"]`).classList.add("missing") }
+    });
+  }
+  if(missing.length){
+    const err = $("#stepErr");
+    err.textContent = st.id==="anag"
+      ? "Completa i campi evidenziati in rosso (se non avete un sito, spunta la casella) e accetta l'informativa privacy per continuare."
+      : (missing.length===1 ? "Manca una risposta: è evidenziata in rosso." : `Mancano ${missing.length} risposte: sono evidenziate in rosso.`);
+    err.hidden = false;
+    document.querySelector(".missing")?.scrollIntoView({behavior:"smooth", block:"center"});
+    return false;
+  }
+  return true;
+}
+
+/* =========================================================
+   PROFILO
+   ========================================================= */
+function radarSVG(r){
+  const W=460,H=330,cx=230,cy=165,R=112;
+  const ang=[-90,0,90,180].map(d=>d*Math.PI/180);
+  const pt=(v,i)=>[cx+Math.cos(ang[i])*R*v/5, cy+Math.sin(ang[i])*R*v/5];
+  const poly=vals=>vals.map((v,i)=>pt(v,i).map(n=>n.toFixed(1)).join(",")).join(" ");
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Radar dei punteggi per area">`;
+  for(let k=1;k<=5;k++) s+=`<polygon points="${poly([k,k,k,k])}" fill="none" stroke="var(--line)" stroke-width="1"/>`;
+  ang.forEach((a,i)=>{ const [x,y]=pt(5,i); s+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="var(--line)"/>` });
+  for(let k=1;k<=5;k++){ const [x,y]=pt(k,0); s+=`<text x="${x+5}" y="${y+4}" font-size="10" fill="var(--muted)" font-family="Lato,sans-serif">${k}</text>` }
+  const thr=[CONFIG.threshold,CONFIG.threshold,CONFIG.threshold,CONFIG.threshold];
+  s+=`<polygon points="${poly(thr)}" fill="none" stroke="var(--ink)" stroke-opacity=".55" stroke-width="1.5" stroke-dasharray="5 4"/>`;
+  s+=`<polygon points="${poly(r.areas.map(a=>a.w))}" fill="var(--purple)" fill-opacity=".14" stroke="var(--purple)" stroke-width="2"/>`;
+  s+=`<polygon points="${poly(r.areas.map(a=>a.v))}" fill="var(--gold)" fill-opacity=".35" stroke="var(--gold)" stroke-width="2.5"/>`;
+  r.areas.forEach((a,i)=>{ const [x,y]=pt(a.v,i); s+=`<circle cx="${x}" cy="${y}" r="4" fill="var(--gold)"/>` });
+  const L=[["Comunicazione"],["Organizzazione","interna"],["Offerta","commerciale"],["Esperienza","internazionale"]];
+  const pos=[[cx,cy-R-14,"middle"],[cx+R+12,cy-4,"start"],[cx,cy+R+20,"middle"],[cx-R-12,cy-4,"end"]];
+  L.forEach((lines,i)=>{ const [x,y,an]=pos[i]; lines.forEach((t,j)=>{ s+=`<text x="${x}" y="${y+j*14}" text-anchor="${an}" font-size="12" font-weight="700" fill="var(--ink)" font-family="Lato,sans-serif">${t}</text>` }) });
+  return s+"</svg>";
+}
+function scaleHTML(r){
+  const pct = v => ((v-1)/4*100).toFixed(1)+"%";
+  const lv = LEVELS.indexOf(r.level);
+  return `<div class="scale"><div class="scale-bar">
+      <div class="scale-bands"><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="thr-line" style="left:${pct(CONFIG.threshold)}" title="Soglia minima export"></div>
+      <div class="mk iag" style="left:${pct(r.totalW)}" title="${esc(r.sc.short)} ${fmt(r.totalW)}"></div>
+      <div class="mk now" style="left:${pct(r.total)}" title="Oggi ${fmt(r.total)}"></div>
+    </div>
+    <div class="scale-lbl">${LEVELS.map((l,i)=>`<span class="${i===lv?'on':''}">${l.name}</span>`).join("")}</div>
+    <div class="legend"><span><i style="background:var(--navy);border:1px solid var(--line)"></i>La tua azienda oggi: ${fmt(r.total)}</span><span><i style="background:var(--purple)"></i>Con ${esc(r.sc.name)}: ${fmt(r.totalW)}</span><span><i class="dash"></i>Soglia minima export: ${CONFIG.threshold}</span></div>
+  </div>`;
+}
+function indRow(x){
+  const d=x.def, w=+(x.v/5*100).toFixed(1), wu=+(x.w/5*100).toFixed(1);
+  const up = x.w>x.v ? ` <em>→ ${fmt(x.w)}</em>` : "";
+  let val = `${fmt(x.v)}${up}`;
+  if(WEM()){
+    const opts=[1,1.5,2,2.5,3,3.5,4,4.5,5].map(n=>`<option value="${n}" ${Math.abs(n-x.v)<.01?"selected":""}>${fmt(n)}</option>`).join("");
+    const extra = [1,1.5,2,2.5,3,3.5,4,4.5,5].some(n=>Math.abs(n-x.v)<.01) ? "" : `<option selected value="${x.v}">${fmt(x.v)}</option>`;
+    val = `<select data-ov="${d.id}" aria-label="Punteggio ${esc(d.label)}">${extra}${opts}</select>${up}`;
+  }
+  return `<div class="ind"><span class="nm">${esc(d.label)}</span><div class="track"><div class="up" style="width:${wu}%"></div><div class="cur" style="width:${w}%"></div><div class="thr"></div></div><span class="v">${val}</span></div>`;
+}
+function areaHTML(ar){
+  const st = status(ar.v);
+  const forti = ar.list.filter(x=>x.v>=4).map(x=>x.def.strong);
+  const deboli = ar.list.filter(x=>x.v<=2.5).map(x=>x.def.weak);
+  const sugg = ar.list.filter(x=>x.v<CONFIG.threshold).sort((a,b)=>a.v-b.v).slice(0,4).map(x=>x.def.sugg);
+  const li = (arr,empty) => arr.length ? `<ul>${arr.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>` : `<p class="empty">${empty}</p>`;
+  const note = state.notes[ar.id]||"";
+  const noteHTML = WEM()
+    ? `<div class="wem-edit noprint"><label class="kicker" for="note-${ar.id}">Note del WEM (compaiono nel PDF)</label><textarea id="note-${ar.id}" data-note="${ar.id}">${esc(note)}</textarea></div><div class="wem-note print-only" id="pn-${ar.id}">${note?`<b>Nota del WEM.</b> ${esc(note)}`:""}</div>`
+    : (note?`<div class="wem-note"><b>Nota del WEM.</b> ${esc(note)}</div>`:"");
+  return `<section class="area">
+    <div class="area-head"><div><div class="kicker">Area</div><h3>${esc(ar.name)}</h3></div>
+      <div class="area-score">${fmt(ar.v)}<small>${ar.w>ar.v?`${esc(ar.short)} ${fmt(ar.w)}`:"&nbsp;"}</small></div></div>
+    <p class="desc"><span class="pill ${st.c}">${st.t}</span> ${esc(ar.desc)}</p>
+    ${ar.list.map(indRow).join("")}
+    <div class="swot">
+      <div class="f"><h4>Punti di forza</h4>${li(forti,"Nessun punto di forza marcato in quest'area.")}</div>
+      <div class="w"><h4>Punti di debolezza</h4>${li(deboli,"Nessuna debolezza critica in quest'area.")}</div>
+      <div class="s"><h4>Suggerimenti</h4>${li(sugg,"Area in linea con la soglia minima export: mantieni il livello attuale.")}</div>
+    </div>
+    ${noteHTML}
+  </section>`;
+}
+function renderProfile(){
+  const a = state.ans, r = compute(a, state.overrides), rec = r.svc, SC = r.sc.name;
+  const date = new Date().toLocaleDateString("it-IT",{day:"numeric",month:"long",year:"numeric"});
+  const lifted = INDICATORS.map(d=>r.ind[d.id]).filter(x=>x.w>x.v);
+  const yours = INDICATORS.map(d=>r.ind[d.id]).filter(x=>!x.svcTarget && x.v<CONFIG.threshold).sort((p,q)=>p.v-q.v);
+  const blockHTML = r.blockers.length ? `<div class="blockers"><div class="kicker" style="color:var(--bad)">Prima di tutto</div><h3>${r.blockers.length===1?"C'è un fattore che blocca":"Ci sono "+r.blockers.length+" fattori che bloccano"} il percorso export, a prescindere dal punteggio</h3><ul>${r.blockers.map(b=>`<li><b>${esc(b.title)}.</b> ${esc(b.text)}</li>`).join("")}</ul></div>` : "";
+  const rows = r.areas.map(ar=>{ const st=status(ar.v); return `<tr><td>${esc(ar.name)}</td><td class="num">${fmt(ar.v)}</td><td class="num p">${fmt(ar.w)}</td><td><span class="pill ${st.c}">${st.t}</span></td></tr>` }).join("");
+  const sameLevel = r.level===r.levelW;
+
+  const svcPre = r.blockers.length ? `<p class="alt" style="margin-top:0"><b>Prima di partire</b> va risolto ${r.blockers.length===1?"il fattore bloccante indicato":"i fattori bloccanti indicati"} nella sezione 01. Possiamo parlarne nella call.</p>` : "";
+  const svc = rec==="rtw" ? {
+    tag:"Il passo che ti consigliamo", name:"Road to World",
+    p:"Un test di 4 mesi su 3-5 mercati esteri scelti con te, per capire se l'export è una strada percorribile per la tua azienda prima di fare investimenti importanti.",
+    why:[
+      r.ind.esp4.v<=2 ? "Non hai ancora vendite estere strutturate: conviene verificare l'interesse reale dei buyer prima di investire." : "Il tuo grado di maturità è sotto la soglia minima export: conviene testare i mercati prima di investire di più.",
+      "Lavoriamo sui mercati con le nostre liste di buyer e ti riportiamo interessi, richieste di campioni e trattative.",
+      "Costo fisso e definito, da 1.200 €, senza contratti annuali."],
+    cta:"Prenota la call di valutazione (30 min)", url:CONFIG.rtwBooking, more:CONFIG.rtwLanding, moreT:"Scopri Road to World",
+    alt:`Se hai già le idee chiare sui mercati e vuoi un presidio continuativo, valuta <b>WIFO Export Office</b>, il nostro ufficio export in outsourcing.`
+  } : {
+    tag:"Il passo che ti consigliamo", name:"WIFO Export Office",
+    p:"Il tuo ufficio export in outsourcing: un WEM (WIFO Export Manager) dedicato crea, sviluppa e presidia i tuoi mercati esteri con il metodo WIFO®, con un contratto annuale.",
+    why:[
+      "Hai le basi per lavorare con l'estero: il salto di qualità viene dalla continuità commerciale.",
+      `Il WEM interviene subito sugli indicatori dove oggi perdi punti: ${lifted.slice(0,3).map(x=>x.def.label.toLowerCase()).join(", ") || "presidio e metodo"}.`,
+      "Nessun limite al numero di mercati: si parte da quelli con il miglior rapporto potenziale/sforzo."],
+    cta:"Prenota una call conoscitiva (20 min)", url:CONFIG.eoBooking, more:CONFIG.site, moreT:"Visita iagain.it",
+    alt:`Se preferisci prima testare i mercati con un investimento contenuto, c'è <b>Road to World</b>: 4 mesi, 3-5 mercati, da 1.200 €.`
+  };
+
+  const metaBits = [a.categoria, a.regione, a.referente && (a.referente + (a.ruolo?` · ${a.ruolo}`:""))].filter(Boolean).map(esc);
+  const wemSign = WEM()
+    ? `<div class="wem-sign noprint"><label for="wemName">Profilo verificato dal WEM:</label><input id="wemName" value="${esc(state.wemName)}" placeholder="Nome e cognome"></div>`
+    : "";
+  const signed = state.wemName ? ` Verificato da <b>${esc(state.wemName)}</b>, WEM IAGAIN.` : "";
+
+  $("#sheet").innerHTML = `
+  <header class="cover">
+    <div class="top"><span>IAGAIN · Export Profile</span><span>${esc(date)}</span></div>
+    <h1>${esc(a.azienda||"La tua azienda")}</h1>
+    <div class="meta">${metaBits.map(b=>`<span>${b}</span>`).join("")}</div>
+  </header>
+
+  <section class="sec">
+    <div class="kicker">01 · Grado di maturità export</div>
+    <div class="grade">
+      <div><div class="score-big">${fmt(r.total)}<small> / 5</small></div><div class="lvl-name">${r.level.name}</div></div>
+      <p class="lvl-text">${esc(r.level.text)}</p>
+    </div>
+    ${scaleHTML(r)}
+    ${blockHTML}
+  </section>
+
+  <section class="sec">
+    <div class="kicker">02 · Le 4 aree</div>
+    <h2>Dove sei forte e dove perdi punti</h2>
+    <p class="lead">Ogni area è la media dei suoi indicatori, da 1 a 5. Sotto il ${CONFIG.threshold}, livello minimo export, un buyer estero tende a notare le lacune prima del prodotto.</p>
+    <div class="radar-wrap">
+      ${radarSVG(r)}
+      <div style="min-width:0;overflow-x:auto">
+        <table class="area-table"><thead><tr><th>Area</th><th style="text-align:right">Oggi</th><th style="text-align:right">${esc(r.sc.short.replace("con ","Con "))}</th><th>Stato</th></tr></thead>
+        <tbody>${rows}<tr class="tot"><td>Grado di maturità</td><td class="num">${fmt(r.total)}</td><td class="num p">${fmt(r.totalW)}</td><td></td></tr></tbody></table>
+        <div class="legend"><span><i style="background:var(--gold)"></i>Oggi</span><span><i style="background:var(--purple)"></i>${esc(r.sc.short.replace("con ","Con "))}</span><span><i class="dash"></i>Soglia minima</span></div>
+      </div>
+    </div>
+  </section>
+
+  ${r.areas.map(ar=>areaHTML({...ar, short:r.sc.short})).join("")}
+
+  <section class="sec with">
+    <div class="kicker">03 · ${esc(r.sc.short.replace("con ","Con "))}</div>
+    <h2>Fin dove puoi arrivare</h2>
+    <div class="big"><span>${fmt(r.total)} ${r.level.name}</span><span class="arrow" aria-hidden="true">→</span><span class="to">${fmt(r.totalW)} ${r.levelW.name}</span></div>
+    <p class="lead">${sameLevel
+      ? `Con ${SC} il punteggio sale di ${fmt(r.totalW-r.total)} punti all'interno dello stesso grado. Il margine più grande dipende dagli aspetti che restano in mano all'azienda.`
+      : `Con ${SC} il tuo grado di maturità passa da <b>${r.level.name}</b> a <b>${r.levelW.name}</b>. Le barre tratteggiate in viola, nelle aree qui sopra, mostrano dove interveniamo.`}${rec==="rtw"?" Road to World è un test di 4 mesi: lavora sui contatti con i buyer, non costruisce l'ufficio export. Il salto completo arriva con WIFO Export Office.":""}</p>
+    <div class="cols2">
+      <div><h4 style="color:var(--purple)">Cosa facciamo noi</h4>${lifted.length?`<ul>${lifted.map(x=>`<li><b>${esc(x.def.label)}</b> (${fmt(x.v)} → ${fmt(x.w)}). ${esc(x.uplift)}</li>`).join("")}</ul>`:`<p class="alt">I tuoi indicatori operativi sono già al livello che raggiungiamo di norma con i clienti.</p>`}</div>
+      <div><h4>Cosa resta a te</h4>${yours.length?`<ul>${yours.map(x=>`<li><b>${esc(x.def.label)}</b> (${fmt(x.v)}). ${esc(x.def.sugg)}</li>`).join("")}</ul>`:`<p class="alt">Gli aspetti che dipendono direttamente dall'azienda sono già almeno in linea con la soglia minima.</p>`}</div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="kicker">04 · Il passo successivo</div>
+    <div class="next">
+      ${svcPre}
+      <div class="svc">
+        <div class="tag">${svc.tag}</div>
+        <h3>${svc.name}</h3>
+        <p>${svc.p}</p>
+        <ul>${svc.why.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>
+        <div class="actions"><a class="btn btn-primary" href="${esc(svc.url)}" target="_blank" rel="noopener">${svc.cta}</a><a class="btn btn-ghost" href="${esc(svc.more)}" target="_blank" rel="noopener">${svc.moreT}</a></div>
+        <p class="url" style="margin-top:10px">${esc(svc.url)}</p>
+      </div>
+      <p class="alt">${svc.alt}</p>
+      ${(a.mercati||[]).length?`<p class="alt">Mercati che ti interessano: <b>${(a.mercati).map(esc).join(", ")}</b>. Ne parliamo nella call, con i dati sulla domanda per la tua categoria.</p>`:""}
+    </div>
+  </section>
+
+  <section class="sec method">
+    <div class="kicker">Come leggere questo profilo</div>
+    <p>Il profilo valuta 23 indicatori su una scala da 1 a 5, raggruppati in 4 aree. Il grado di maturità è la media delle 4 aree. Il ${CONFIG.threshold} è il livello minimo per affrontare con continuità un mercato estero.</p>
+    <p>Lo scenario "${esc(r.sc.short)}" alza solo gli indicatori su cui quel servizio incide direttamente, al livello che raggiunge di norma. Gli altri restano invariati, perché dipendono dalle scelte dell'azienda. I fattori bloccanti sono segnalati a parte e la media non li assorbe.</p>
+    <p>Il profilo si basa sulle risposte date nel questionario ed è una fotografia di partenza.<span id="signedSpan">${signed || " In una call un nostro WEM lo verifica con te e lo completa con l'analisi dei tuoi materiali."}</span></p>
+    ${wemSign}
+  </section>
+  <footer class="foot"><span>Export Profile è uno strumento sviluppato da IAGAIN S.r.l. · metodo WIFO®</span><span>www.iagain.it</span></footer>`;
+
+  $("#exampleFlag").hidden = !state.sample;
+  $("#copyBtn").hidden = !WEM();
+  $("#printBtn").hidden = window.self !== window.top;
+  $("#wemBadge").hidden = !WEM();
+}
+
+/* =========================================================
+   LEAD (webhook)
+   ========================================================= */
+function leadPayload(){
+  const a = state.ans, r = compute(a, state.overrides);
+  return {
+    data: new Date().toISOString(), azienda:a.azienda, referente:a.referente, ruolo:a.ruolo, email:a.email, telefono:a.telefono,
+    regione:a.regione, sito:a.sito, categoria:a.categoria, consenso_privacy:!!a.privacy, consenso_marketing:!!a.marketing,
+    mercati_interesse:(a.mercati||[]).join(", "),
+    punteggio:+r.total.toFixed(2), grado:r.level.name, punteggio_con_iagain:+r.totalW.toFixed(2), grado_con_iagain:r.levelW.name,
+    servizio_consigliato: r.sc.name,
+    fattori_bloccanti: r.blockers.map(b=>b.title).join(", "),
+    aree:Object.fromEntries(r.areas.map(x=>[x.id,{oggi:+x.v.toFixed(2), con_iagain:+x.w.toFixed(2)}])),
+    indicatori:Object.fromEntries(INDICATORS.map(d=>[d.id,+r.ind[d.id].v.toFixed(2)])),
+    note_wem: state.notes, wem: state.wemName || undefined
+  };
+}
+function sendLead(){
+  if(!CONFIG.webhookUrl || state.sample || state.sent || WEM()) return;
+  state.sent = true;
+  try{ fetch(CONFIG.webhookUrl,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain"},body:JSON.stringify(leadPayload())}).catch(()=>{}) }catch(e){}
+}
+
+/* =========================================================
+   NAVIGAZIONE
+   ========================================================= */
+function show(view){
+  ["vIntro","vQuiz","vProfile"].forEach(v=>$("#"+v).hidden = v!==view);
+  window.scrollTo({top:0});
+}
+function toast(t){ const el=$("#toast"); el.textContent=t; el.hidden=false; clearTimeout(toast._t); toast._t=setTimeout(()=>el.hidden=true,2600) }
+function startQuiz(fresh){
+  if(fresh){ state.ans={}; state.step=0; state.overrides={}; state.notes={}; state.sent=false }
+  state.sample=false; renderStep(); show("vQuiz");
+}
+
+$("#startBtn").addEventListener("click",()=>startQuiz(true));
+$("#exampleBtn").addEventListener("click",()=>{ state.ans=JSON.parse(JSON.stringify(SAMPLE)); state.sample=true; state.overrides={}; state.notes={}; renderProfile(); show("vProfile") });
+$("#startFromExample").addEventListener("click",e=>{ e.preventDefault(); startQuiz(true) });
+$("#resumeLink").addEventListener("click",e=>{ e.preventDefault(); const d=loadDraft(); if(d){ state.ans=d.ans||{}; state.step=Math.min(d.step||0,STEPS.length-1) } state.sample=false; renderStep(); show("vQuiz") });
+$("#prevBtn").addEventListener("click",()=>{ readStep(); saveDraft(); if(state.step===0){ show("vIntro"); return } state.step--; renderStep(); window.scrollTo({top:0}) });
+$("#quizForm").addEventListener("submit",e=>{
+  e.preventDefault(); readStep(); saveDraft();
+  if(!validateStep()) return;
+  if(state.step<STEPS.length-1){ state.step++; saveDraft(); renderStep(); window.scrollTo({top:0}); return }
+  clearDraft(); renderProfile(); show("vProfile"); sendLead();
+});
+$("#quizForm").addEventListener("change",e=>{
+  const t=e.target;
+  if(t.type==="checkbox" && t.name.startsWith("q-")){
+    const group=[...document.querySelectorAll(`input[name="${t.name}"]`)];
+    if(t.dataset.excl && t.checked) group.filter(x=>x!==t).forEach(x=>x.checked=false);
+    else if(t.checked) group.filter(x=>x.dataset.excl).forEach(x=>x.checked=false);
+  }
+  if(t.id==="f-nosito"){ const si=$("#f-sito"); si.disabled=t.checked; if(t.checked) si.value="" }
+  t.closest("fieldset")?.classList.remove("missing");
+  t.closest(".field")?.classList.remove("missing");
+});
+$("#editBtn").addEventListener("click",()=>{ if(state.sample){ startQuiz(true); return } state.step=0; renderStep(); show("vQuiz") });
+$("#newBtn").addEventListener("click",()=>{ clearDraft(); state.wemName=""; startQuiz(true) });
+$("#printBtn").addEventListener("click",()=>window.print());
+$("#copyBtn").addEventListener("click",async()=>{
+  const txt = JSON.stringify(leadPayload(),null,2);
+  try{ await navigator.clipboard.writeText(txt); toast("Dati copiati negli appunti") }
+  catch(e){ const box=$("#copyFallback"); box.value=txt; box.hidden=false; box.focus(); box.select(); toast("Seleziona e copia il testo qui sopra") }
+});
+$("#sheet").addEventListener("change",e=>{
+  const t=e.target;
+  if(t.dataset.ov){ state.overrides[t.dataset.ov]=+t.value; renderProfile() }
+});
+$("#sheet").addEventListener("input",e=>{
+  const t=e.target;
+  if(t.dataset.note){
+    state.notes[t.dataset.note]=t.value;
+    const pn=document.getElementById("pn-"+t.dataset.note);
+    if(pn) pn.innerHTML = t.value.trim() ? `<b>Nota del WEM.</b> ${esc(t.value)}` : "";
+  }
+  if(t.id==="wemName"){
+    state.wemName=t.value;
+    const sg=document.getElementById("signedSpan");
+    if(sg) sg.innerHTML = t.value.trim() ? ` Verificato da <b>${esc(t.value)}</b>, WEM IAGAIN.` : " In una call un nostro WEM lo verifica con te e lo completa con l'analisi dei tuoi materiali.";
+  }
+});
+window.addEventListener("hashchange",()=>{ $("#wemBadge").hidden=!WEM(); if(!$("#vProfile").hidden) renderProfile() });
+
+(function init(){
+  $("#wemBadge").hidden = !WEM();
+  const d = loadDraft();
+  if(d && d.ans && Object.keys(d.ans).length) $("#draftNote").hidden = false;
+})();
+</script>
+
+</body>
+</html>

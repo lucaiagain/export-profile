@@ -1,0 +1,153 @@
+.main {
+  width: 100%;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.loginMain {
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 56px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.h1 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 900;
+}
+.ok {
+  color: var(--good-text);
+  font-weight: 700;
+  font-size: 15px;
+}
+.who {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted-on-blue);
+  font-size: 14px;
+}
+.titleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  align-items: end;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 16px;
+}
+.filterBtns {
+  display: flex;
+  gap: 8px;
+}
+.count {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+.tableWrap {
+  overflow-x: auto;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.table th {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--cond);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line-soft);
+  vertical-align: top;
+}
+.num {
+  text-align: right !important;
+  font-weight: 700;
+}
+.sub {
+  color: var(--muted);
+  font-size: 13px;
+}
+.wemBar {
+  background: var(--gold-light);
+  border-bottom: 1px solid var(--line);
+}
+.wemInner,
+.wemForm {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 12px 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  align-items: center;
+  font-size: 14px;
+}
+.wemForm {
+  padding-top: 0;
+  align-items: flex-end;
+}
+.wemForm :global(.field) {
+  min-width: 260px;
+}
+.wemBadge {
+  font-family: var(--cond);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: var(--blue);
+  color: var(--gold);
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+.wemArea {
+  border: 1px dashed var(--gold);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #fbf9f5;
+}
+.ovGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 10px 18px;
+}
+.ovRow {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+}
