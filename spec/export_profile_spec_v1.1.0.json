@@ -1,0 +1,1691 @@
+{
+  "name": "IAGAIN Export Profile",
+  "version": "1.1.0",
+  "released": "2026-10-31",
+  "scale": {
+    "min": 1,
+    "max": 5
+  },
+  "threshold": 3,
+  "rules": {
+    "area_score": "media aritmetica degli indicatori dell'area",
+    "total_score": "media aritmetica delle 4 aree",
+    "strength_if_gte": 4,
+    "weakness_if_lte": 2.5,
+    "suggestion_if_lt": 3,
+    "max_suggestions_per_area": 4,
+    "suggestions_order": "dal punteggio più basso",
+    "area_status": [
+      {
+        "min": 4,
+        "label": "Punto di forza"
+      },
+      {
+        "min": 3,
+        "label": "In linea"
+      },
+      {
+        "min": 2.5,
+        "label": "Sotto soglia"
+      },
+      {
+        "min": 1,
+        "label": "Da costruire"
+      }
+    ],
+    "recommend": {
+      "rtw_if": "indicatore esp4 <= 2 OPPURE grado totale < 2.6 (calcolato sui punteggi attuali)",
+      "otherwise": "eo",
+      "when": {
+        "service": "rtw",
+        "any": [
+          {
+            "indicator": "esp4",
+            "lte": 2
+          },
+          {
+            "total": true,
+            "lt": 2.6
+          }
+        ]
+      }
+    },
+    "scenario": "per ogni indicatore in scenarios[servizio consigliato].items: valore = max(attuale, target); gli altri restano invariati",
+    "display_rounding": "una cifra decimale, virgola come separatore"
+  },
+  "levels": [
+    {
+      "min": 1,
+      "name": "Esordiente",
+      "text": "L'azienda non ha ancora le basi per presentarsi all'estero. Prima di cercare buyer servono materiali, condizioni di vendita e un minimo di organizzazione."
+    },
+    {
+      "min": 1.8,
+      "name": "Apprendista",
+      "text": "Alcune basi ci sono, ma restano lacune che con i buyer si pagano. È il momento giusto per testare i mercati con un investimento contenuto, imparando sul campo."
+    },
+    {
+      "min": 2.6,
+      "name": "Specialista",
+      "text": "L'azienda ha le basi per lavorare con l'estero. Per avere risultati continui servono metodo, costanza e una persona che segua i buyer."
+    },
+    {
+      "min": 3.4,
+      "name": "Esperto",
+      "text": "L'azienda è pronta per l'export. Il margine di crescita sta nell'aprire nuovi mercati e canali con un presidio commerciale strutturato."
+    },
+    {
+      "min": 4.2,
+      "name": "Campione",
+      "text": "Profilo export maturo. La crescita passa dalla scelta di nuovi mercati e dal presidio costante di quelli esistenti."
+    }
+  ],
+  "areas": [
+    {
+      "id": "com",
+      "name": "Comunicazione",
+      "desc": "Il primo impatto che il buyer ha della tua azienda è determinante. Valutiamo i materiali con cui ti presenti, la loro qualità e se sono utilizzabili all'estero, almeno in inglese."
+    },
+    {
+      "id": "org",
+      "name": "Organizzazione interna",
+      "desc": "Una struttura organizzata risponde prontamente ed efficacemente ai buyer. Valutiamo chi segue l'export, i tempi di risposta, le lingue e quanto regge la capacità produttiva."
+    },
+    {
+      "id": "off",
+      "name": "Offerta commerciale",
+      "desc": "Prodotto e condizioni di vendita devono essere pronti per un importatore. Valutiamo distintività, affollamento della categoria, certificazioni, formati e politica commerciale."
+    },
+    {
+      "id": "esp",
+      "name": "Esperienza internazionale",
+      "desc": "L'export non si improvvisa e chiede tempo e investimenti. Valutiamo cosa sai già fare e quanto sono realistiche le aspettative su tempi e budget."
+    }
+  ],
+  "steps": [
+    {
+      "id": "anag",
+      "title": "La tua azienda",
+      "intro": "Partiamo dai dati essenziali. Li usiamo per intestare il tuo Export Profile e per ricontattarti, se lo desideri."
+    },
+    {
+      "id": "com",
+      "title": "Comunicazione",
+      "intro": "Come ti presenti a un buyer estero che non ti conosce. Rispondi pensando a come sono le cose oggi, non a come vorresti che fossero."
+    },
+    {
+      "id": "org",
+      "title": "Organizzazione interna",
+      "intro": "Chi segue l'export e come risponde l'azienda alle richieste."
+    },
+    {
+      "id": "off",
+      "title": "Offerta commerciale",
+      "intro": "Prodotto, certificazioni e condizioni di vendita."
+    },
+    {
+      "id": "esp",
+      "title": "Esperienza internazionale",
+      "intro": "Cosa hai già fatto sull'estero e cosa ti aspetti."
+    }
+  ],
+  "questions": [
+    {
+      "id": "com1",
+      "order": 1,
+      "area": "com",
+      "type": "single",
+      "text": "Quali materiali usi per presentare l'azienda a un nuovo cliente?",
+      "hint": null,
+      "why": "È la prima cosa che un buyer riceve da te: decide se approfondire o passare oltre.",
+      "skip_if": null,
+      "options": [
+        {
+          "key": "1",
+          "label": "Nessuno, ci presentiamo a voce o con il sito",
+          "score": 1
+        },
+        {
+          "key": "2",
+          "label": "Qualcosa fatto in casa, solo in italiano",
+          "score": 2
+        },
+        {
+          "key": "3",
+          "label": "Catalogo o brochure curati, solo in italiano",
+          "score": 3
+        },
+        {
+          "key": "4",
+          "label": "Catalogo o brochure curati, anche in inglese",
+          "score": 4
+        },
+        {
+          "key": "5",
+          "label": "Company profile e catalogo professionali in inglese e in altre lingue",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": "com2",
+      "order": 2,
+      "area": "com",
+      "type": "single",
+      "text": "Com'è il tuo sito web?",
+      "hint": null,
+      "why": "Prima di rispondere a una mail, quasi ogni buyer controlla il sito dell'azienda.",
+      "skip_if": {
+        "field": "nosito",
+        "equals": true,
+        "then_score": 1
+      },
+      "options": [
+        {
+          "key": "1",
+          "label": "Non abbiamo un sito",
+          "score": 1
+        },
+        {
+          "key": "2",
+          "label": "C'è, ma è datato o poco curato",
+          "score": 2
+        },
+        {
+          "key": "3",
+          "label": "È curato, ma solo in italiano",
+          "score": 3
+        },
+        {
+          "key": "4",
+          "label": "È curato e tradotto in inglese",
+          "score": 4
+        },
+        {
+          "key": "5",
+          "label": "Multilingue, aggiornato, con una sezione per i professionisti (B2B / export)",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": "com3",
+      "order": 3,
+      "area": "com",
+      "type": "single",
+      "text": "Come descriveresti il marchio e le confezioni dei tuoi prodotti?",
+      "hint": null,
+      "why": "A scaffale il buyer deve riconoscere il tuo prodotto tra tanti prodotti italiani simili.",
+      "skip_if": null,
+      "options": [
+        {
+          "key": "1",
+          "label": "Non abbiamo un nostro marchio (vendiamo sfuso o per conto terzi)",
+          "score": 1
+        },
+        {
+          "key": "2",
+          "label": "Etichetta semplice, senza una vera identità di marca",
+          "score": 2
+        },
+        {
+          "key": "3",
+          "label": "Marchio e confezioni curati, pensati per il mercato italiano",
+          "score": 3
+        },
+        {
+          "key": "4",
+          "label": "Marchio riconoscibile, confezioni che raccontano territorio e prodotto",
+          "score": 4
+        },
+        {
+          "key": "5",
+          "label": "Confezioni già adattate all'estero (testi in inglese, formati, informazioni nutrizionali)",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": "com4",
+      "order": 4,
+      "area": "com",
+      "type": "single",
+      "text": "Hai schede tecniche dei prodotti?",
+      "hint": null,
+      "why": "L'ufficio acquisti di un importatore non valuta un prodotto senza scheda tecnica.",
+      "skip_if": null,
+      "options": [
+        {
+          "key": "1",
+          "label": "No",
+          "score": 1
+        },
+        {
+          "key": "2",
+          "label": "Sì, essenziali e solo in italiano",
+          "score": 2
+        },
+        {
+          "key": "3",
+          "label": "Sì, complete ma solo in italiano",
+          "score": 3
+        },
+        {
+          "key": "4",
+          "label": "Sì, in inglese ma senza dati logistici",
+          "score": 4
+        },
+        {
+          "key": "5",
+          "label": "Sì, in inglese con dati logistici (pallettizzazione, shelf life, EAN, dimensioni)",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": "com5",
+      "order": 5,
+      "area": "com",
+      "type": "single",
+      "text": "Che listino prezzi usi?",
+      "hint": null,
+      "why": "Il listino è tra i primi documenti che un importatore chiede, insieme alle schede tecniche.",
+      "skip_if": null,
+      "options": [
+        {
+          "key": "1",
+          "label": "Nessun listino, facciamo i prezzi caso per caso",
+          "score": 1
+        },
+        {
+          "key": "2",
+          "label": "Solo prezzi al pubblico o per il nostro punto vendita",
+          "score": 2
+        },
+        {
+          "key": "3",
+          "label": "Un listino all'ingrosso per i clienti italiani",
+          "score": 3
+        },
+        {
+          "key": "4",
+          "label": "Un listino export in inglese, con prezzi franco azienda",
+          "score": 4
+        },
+        {
+          "key": "5",
+          "label": "Un listino export con Incoterms, minimi d'ordine, sconti per volumi e tempi di consegna",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": "com6",
+      "order": 6,
+      "area": "com",
+      "type": "single",
+      "text": "Se domani dovessi scrivere a un importatore in Germania, cosa useresti?",
+      "hint": null,
+      "why": "Il primo messaggio decide se il buyer risponde.",
+      "skip_if": null,
+      "options": [
+        {
+          "key": "1",
+          "label": "Non saprei da dove iniziare",
+          "score": 1
+        },
+        {
+          "key": "2",
+          "label": "Una mail in italiano",
+          "score": 2
+        },
+        {
+          "key": "3",
+          "label": "Una mail tradotta al momento, anche con il traduttore automatico",
+          "score": 3
+        },
+        {
+          "key": "4",
+          "label": "Una mail di presentazione in inglese già pronta",
+          "score": 4
+        },
+        {
+          "key": "5",
+          "label": "Mail e presentazioni diverse per importatori, distributori e ristorazione, in più lingue",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": "com7",
+      "order": 7,
+      "area": "com",
+      "type": "single",
+      "text": "Come usi i social per l'azienda?",
+      "hint": null,
+      "why": "Il buyer verifica online che l'azienda sia attiva e curata.",
+      "skip_if": null,
+      "options": [
+        {
+          "key": "1",
+          "label": "Non abbiamo profili aziendali",
+          "score": 1
+        },
+        {
+          "key": "2",
+          "label": "Ci sono, ma li aggiorniamo raramente",
+          "score": 2
+        },
+        {
+          "key": "3",
+          "label": "Pubblichiamo con una certa regolarità, in italiano",
+          "score": 3
+        },
+        {
+          "key": "4",
+          "label": "Pubblichiamo regolarmente, con foto e contenuti curati",
+          "score": 4
+        },
+        {
+          "key": "5",
+          "label": "Pubblichiamo regolarmente anche in inglese e usiamo LinkedIn per i contatti professionali",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": "org1",
+      "order": 8,
+      "area": "org",
+      "type": "single",
+      "text": "Chi segue (o seguirebbe) l'export in azienda?",
+      "hint": null,
+      "why": "Senza una persona che segue i buyer con costanza, i contatti si perdono.",
+      "skip_if": null,
+      "options": [
+        {
+          "key": "1",
+          "label": "Nessuno, non abbiamo tempo",
+          "score": 1
+        },
+        {
+          "key": "2",
+          "label": "Il titolare, nei ritagli di tempo",
+          "score": 2
+        },
+        {
+          "key": "3",
+          "label": "Una persona interna che si occupa anche di altro",
+          "score": 3
+        },
+        {
+          "key": "4",
+          "label": "Una persona dedicata almeno in parte, che parla inglese",
+          "score": 4
+        },
+        {
+          "key": "5",
+          "label": "Una persona o un ufficio dedicati all'export, con le lingue",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": "org2",
+      "order": 9,
+      "area": "org",
+      "type": "single",
+      "text": "Arriva una mail in inglese da un buyer con alcune domande. In quanto tempo rispondi di solito?",
+      "hint": null,
+      "why": "La velocità di risposta è per il buyer il primo segnale di affidabilità.",
+      "skip_if": null,
+      "options": [
+        {
+          "key": "1",
+          "label": "Oltre una settimana, o rischia di restare senza risposta",
+          "score": 1
+        },
+        {
+          "key": "2",
+          "label": "Entro una settimana",
+          "score": 2
+        },
+        {
+          "key": "3",
+          "label": "In 3-4 giorni",
+          "score": 3
+        },
+        {
+          "key": "4",
+          "label": "Entro 48 ore",
+          "score": 4
+        },
+        {
+          "key": "5",
+          "label": "In giornata",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": "org3",
+      "order": 10,
+      "area": "org",
+      "type": "single",
+      "text": "Chi in azienda parla inglese?",
+      "hint": null,
+      "why": "Quasi tutta la corrispondenza con i buyer avviene in inglese.",
+      "skip_if": null,
+      "options": [
+        {
+          "key": "1",
+          "label": "Nessuno",
+          "score": 1
+        },
+        {
+          "key": "2",
+          "label": "Qualcuno, a livello scolastico",
+          "score": 2
+        },
+        {
+          "key": "3",
+          "label": "Qualcuno se la cava per scrivere una mail",
+          "score": 3
+        },
+        {
+          "key": "4",
+          "label": "Almeno una persona lo parla bene, anche al telefono",
+          "score": 4
+        },
+        {
+          "key": "5",
+          "label": "Più persone, e anche altre lingue",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": "org4",
+      "order": 11,
+      "area": "org",
+      "type": "single",
+      "text": "Se domani arrivasse un ordine estero di un intero bancale (pallet), riusciresti a evaderlo?",
+      "hint": null,
+      "why": "Un importatore vuole sapere se puoi evadere un ordine prima di ordinare.",
+      "skip_if": null,
+      "options": [
+        {
+          "key": "1",
+          "label": "No, non abbiamo questa capacità",
+          "score": 1
+        },
+        {
+          "key": "2",
+          "label": "Sì, ma con molta fatica e tempi lunghi",
+          "score": 2
+        },
+        {
+          "key": "3",
+          "label": "Sì, in qualche settimana",
+          "score": 3
+        },
+        {
+          "key": "4",
+          "label": "Sì, nei nostri tempi normali",
+          "score": 4
+        },
+        {
+          "key": "5",
+          "label": "Sì, abbiamo scorte e capacità pianificate anche per ordini più grandi",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": "org5",
+      "order": 12,
+      "area": "org",
+      "type": "single",
+      "text": "Quanto tempo potete dedicare all'export ogni settimana, tra titolari e collaboratori?",
+      "hint": null,
+      "why": "Anche con un supporto esterno, l'export richiede risposte rapide dall'azienda.",
+      "skip_if": null,
+      "options": [
+        {
+          "key": "1",
+          "label": "Al momento nessuno",
+          "score": 1
+        },
+        {
+          "key": "2",
+          "label": "Meno di 2 ore",
+          "score": 2
+        },
+        {
+          "key": "3",
+          "label": "Da 2 a 5 ore",
+          "score": 3
+        },
+        {
+          "key": "4",
+          "label": "Da 5 a 15 ore",
+          "score": 4
+        },
+        {
+          "key": "5",
+          "label": "Più di 15 ore, o una persona dedicata",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": "off1",
+      "order": 13,
+      "area": "off",
+      "type": "single",
+      "text": "Cosa distingue i tuoi prodotti da quelli dei concorrenti?",
+      "hint": null,
+      "why": "Senza un elemento distintivo, la trattativa si sposta subito sul prezzo.",
+      "skip_if": null,
+      "options": [
+        {
+          "key": "1",
+          "label": "Niente di particolare, sono prodotti tradizionali come tanti",
+          "score": 1
+        },
+        {
+          "key": "2",
+          "label": "La qualità, ma è difficile spiegare perché",
+          "score": 2
+        },
+        {
+          "key": "3",
+          "label": "La qualità e il legame con il territorio, e sappiamo raccontarli",
+          "score": 3
+        },
+        {
+          "key": "4",
+          "label": "Un elemento concreto: ricetta, materia prima, lavorazione, certificazione o premio",
+          "score": 4
+        },
+        {
+          "key": "5",
+          "label": "Più elementi concreti e riconosciuti: premi, guide, certificazioni, un prodotto unico",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": "off3",
+      "order": 14,
+      "area": "off",
+      "type": "single",
+      "text": "Hai condizioni di vendita definite (minimi d'ordine, sconti, pagamenti)?",
+      "hint": null,
+      "why": "Minimi, sconti e pagamenti chiari evitano di ripartire da zero a ogni richiesta.",
+      "skip_if": null,
+      "options": [
+        {
+          "key": "1",
+          "label": "No, decidiamo di volta in volta",
+          "score": 1
+        },
+        {
+          "key": "2",
+          "label": "Solo il prezzo",
+          "score": 2
+        },
+        {
+          "key": "3",
+          "label": "Il prezzo e un minimo d'ordine",
+          "score": 3
+        },
+        {
+          "key": "4",
+          "label": "Condizioni scritte complete: prezzi, minimi, sconti, pagamenti",
+          "score": 4
+        },
+        {
+          "key": "5",
+          "label": "Condizioni diverse per canale: importatore, distributore, ristorazione, grande distribuzione",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": "off4",
+      "order": 15,
+      "area": "off",
+      "type": "multi",
+      "text": "Quali certificazioni o documenti hai?",
+      "hint": "Scegli tutti quelli che hai.",
+      "why": "Alcuni canali e mercati chiedono certificazioni precise per accettare un fornitore.",
+      "skip_if": null,
+      "options": [
+        {
+          "key": "bio",
+          "label": "Biologico",
+          "weight": 1,
+          "exclusive": false
+        },
+        {
+          "key": "dop",
+          "label": "DOP, IGP, DOC o DOCG",
+          "weight": 1,
+          "exclusive": false
+        },
+        {
+          "key": "ifs",
+          "label": "IFS, BRC, ISO 22000 o FSSC 22000",
+          "weight": 1.5,
+          "exclusive": false
+        },
+        {
+          "key": "hal",
+          "label": "Halal o Kosher",
+          "weight": 0.5,
+          "exclusive": false
+        },
+        {
+          "key": "lab",
+          "label": "Analisi di laboratorio recenti sui prodotti",
+          "weight": 0.5,
+          "exclusive": false
+        },
+        {
+          "key": "fda",
+          "label": "Registrazione FDA (Stati Uniti)",
+          "weight": 0.5,
+          "exclusive": false
+        },
+        {
+          "key": "none",
+          "label": "Nessuna, oltre all'HACCP obbligatorio",
+          "weight": 0,
+          "exclusive": true
+        }
+      ]
+    },
+    {
+      "id": "off5",
+      "order": 16,
+      "area": "off",
+      "type": "single",
+      "text": "Quali formati e personalizzazioni puoi offrire?",
+      "hint": null,
+      "why": "Negozi, ristorazione e grande distribuzione chiedono formati diversi.",
+      "skip_if": null,
+      "options": [
+        {
+          "key": "1",
+          "label": "Un solo formato",
+          "score": 1
+        },
+        {
+          "key": "2",
+          "label": "Pochi formati, per la vendita al dettaglio",
+          "score": 2
+        },
+        {
+          "key": "3",
+          "label": "Più formati per la vendita al dettaglio",
+          "score": 3
+        },
+        {
+          "key": "4",
+          "label": "Formati per il dettaglio e per la ristorazione (Ho.Re.Ca.)",
+          "score": 4
+        },
+        {
+          "key": "5",
+          "label": "Dettaglio, ristorazione e personalizzazioni o marchio del cliente (private label)",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": "esp1",
+      "order": 17,
+      "area": "esp",
+      "type": "single",
+      "text": "Hai partecipato a fiere di settore?",
+      "hint": null,
+      "why": "Le fiere di settore sono uno dei luoghi dove si incontra buona parte dei buyer.",
+      "skip_if": null,
+      "options": [
+        {
+          "key": "1",
+          "label": "Mai",
+          "score": 1
+        },
+        {
+          "key": "2",
+          "label": "Solo a eventi o sagre locali",
+          "score": 2
+        },
+        {
+          "key": "3",
+          "label": "A fiere nazionali come visitatore (es. Vinitaly, Cibus, TuttoFood)",
+          "score": 3
+        },
+        {
+          "key": "4",
+          "label": "A fiere nazionali come espositore",
+          "score": 4
+        },
+        {
+          "key": "5",
+          "label": "A fiere internazionali, in Italia o all'estero, come espositore",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": "esp2",
+      "order": 18,
+      "area": "esp",
+      "type": "single",
+      "text": "Sigle come EXW, FCA o DAP ti dicono qualcosa?",
+      "hint": null,
+      "why": "Dicono chi paga trasporto e rischi: compaiono in ogni offerta a un buyer estero.",
+      "skip_if": null,
+      "options": [
+        {
+          "key": "1",
+          "label": "Mai sentite",
+          "score": 1
+        },
+        {
+          "key": "2",
+          "label": "Le ho sentite, ma non saprei usarle",
+          "score": 2
+        },
+        {
+          "key": "3",
+          "label": "So cosa significano",
+          "score": 3
+        },
+        {
+          "key": "4",
+          "label": "Le uso nelle offerte ai clienti",
+          "score": 4
+        },
+        {
+          "key": "5",
+          "label": "Le uso e so calcolare quanto costano trasporto e dogana per ciascuna",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": "esp3",
+      "order": 19,
+      "area": "esp",
+      "type": "single",
+      "text": "Hai già spedito all'estero?",
+      "hint": null,
+      "why": "Campioni e primi ordini richiedono di spedire all'estero con i documenti giusti.",
+      "skip_if": null,
+      "options": [
+        {
+          "key": "1",
+          "label": "Mai",
+          "score": 1
+        },
+        {
+          "key": "2",
+          "label": "Solo pacchi o campioni con il corriere",
+          "score": 2
+        },
+        {
+          "key": "3",
+          "label": "Qualche spedizione, con l'aiuto di qualcuno",
+          "score": 3
+        },
+        {
+          "key": "4",
+          "label": "Spedizioni di bancali con uno spedizioniere di fiducia",
+          "score": 4
+        },
+        {
+          "key": "5",
+          "label": "Spedizioni regolari, anche container o groupage, con i documenti doganali",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": "esp4",
+      "order": 20,
+      "area": "esp",
+      "type": "single",
+      "text": "Vendi già all'estero?",
+      "hint": null,
+      "why": "Ci dice da dove parti: costruire i mercati da zero o svilupparli.",
+      "skip_if": null,
+      "options": [
+        {
+          "key": "1",
+          "label": "No",
+          "score": 1
+        },
+        {
+          "key": "2",
+          "label": "Solo occasionalmente, a privati o turisti",
+          "score": 2
+        },
+        {
+          "key": "3",
+          "label": "Uno o due clienti esteri, non regolari",
+          "score": 3
+        },
+        {
+          "key": "4",
+          "label": "Clienti esteri regolari in 1-2 paesi",
+          "score": 4
+        },
+        {
+          "key": "5",
+          "label": "Export continuativo in 3 o più paesi",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": "esp5",
+      "order": 21,
+      "area": "esp",
+      "type": "single",
+      "text": "Come ti faresti pagare da un nuovo cliente estero?",
+      "hint": null,
+      "why": "Scegliere come farsi pagare protegge dal rischio di insoluti.",
+      "skip_if": null,
+      "options": [
+        {
+          "key": "1",
+          "label": "Non saprei",
+          "score": 1
+        },
+        {
+          "key": "2",
+          "label": "Come faccio con i clienti italiani",
+          "score": 2
+        },
+        {
+          "key": "3",
+          "label": "Pagamento anticipato, sempre",
+          "score": 3
+        },
+        {
+          "key": "4",
+          "label": "Anticipato al primo ordine, poi bonifico a scadenza",
+          "score": 4
+        },
+        {
+          "key": "5",
+          "label": "Valuto anche lettera di credito o assicurazione del credito, in base al cliente e al paese",
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": "esp6a",
+      "order": 22,
+      "area": "esp",
+      "type": "single",
+      "text": "Secondo te, dopo quanto tempo arrivano ordini continuativi da un nuovo mercato estero?",
+      "hint": null,
+      "why": "Aspettative realistiche sui tempi evitano di abbandonare un mercato troppo presto.",
+      "skip_if": null,
+      "options": [
+        {
+          "key": "1",
+          "label": "1-3 mesi",
+          "score": 1
+        },
+        {
+          "key": "2",
+          "label": "3-6 mesi",
+          "score": 2
+        },
+        {
+          "key": "3",
+          "label": "6-12 mesi",
+          "score": 4
+        },
+        {
+          "key": "4",
+          "label": "12-24 mesi",
+          "score": 5
+        },
+        {
+          "key": "5",
+          "label": "Non ne ho idea",
+          "score": 2
+        }
+      ]
+    },
+    {
+      "id": "esp6b",
+      "order": 23,
+      "area": "esp",
+      "type": "single",
+      "text": "Quanto saresti disposto a investire nell'export nel primo anno (consulenza, campioni, fiere, materiali)?",
+      "hint": null,
+      "why": "Ogni percorso export richiede un investimento iniziale: ci serve per consigliarti quello giusto.",
+      "skip_if": null,
+      "options": [
+        {
+          "key": "1",
+          "label": "Nulla, finché non arrivano risultati",
+          "score": 1
+        },
+        {
+          "key": "2",
+          "label": "Fino a 2.000 €",
+          "score": 2
+        },
+        {
+          "key": "3",
+          "label": "Da 2.000 a 5.000 €",
+          "score": 3
+        },
+        {
+          "key": "4",
+          "label": "Da 5.000 a 15.000 €",
+          "score": 4
+        },
+        {
+          "key": "5",
+          "label": "Oltre 15.000 €",
+          "score": 5
+        }
+      ]
+    }
+  ],
+  "indicators": [
+    {
+      "id": "com1",
+      "area": "com",
+      "label": "Materiali di presentazione",
+      "source": {
+        "type": "question",
+        "question": "com1"
+      },
+      "texts": {
+        "strength": "Materiali di presentazione curati e già disponibili in inglese.",
+        "weakness": "Mancano materiali di presentazione professionali da usare con un buyer estero.",
+        "suggestion": "Prepara un company profile breve (4-6 pagine) e un catalogo in inglese: sono la prima cosa che un importatore chiede."
+      }
+    },
+    {
+      "id": "com2",
+      "area": "com",
+      "label": "Sito web",
+      "source": {
+        "type": "question",
+        "question": "com2"
+      },
+      "texts": {
+        "strength": "Sito curato e leggibile anche da un buyer straniero.",
+        "weakness": "Il sito non supera il controllo che ogni buyer fa prima di rispondere.",
+        "suggestion": "Il buyer ti cerca online prima di rispondere: serve almeno una versione in inglese con storia, prodotti e un contatto per l'export."
+      }
+    },
+    {
+      "id": "com3",
+      "area": "com",
+      "label": "Marchio e confezioni",
+      "source": {
+        "type": "question",
+        "question": "com3"
+      },
+      "texts": {
+        "strength": "Marchio e confezioni con un'identità chiara, riconoscibile a scaffale.",
+        "weakness": "L'identità di marca è debole: il prodotto rischia di confondersi con decine di altri prodotti italiani.",
+        "suggestion": "Scegli pochi elementi distintivi (storia, territorio, materia prima) e portali su etichetta e materiali."
+      }
+    },
+    {
+      "id": "com4",
+      "area": "com",
+      "label": "Schede tecniche",
+      "source": {
+        "type": "question",
+        "question": "com4"
+      },
+      "texts": {
+        "strength": "Schede tecniche complete e in inglese, pronte per l'ufficio acquisti di un importatore.",
+        "weakness": "Mancano schede tecniche complete in inglese: senza, un importatore non può valutare il prodotto.",
+        "suggestion": "Per ogni prodotto servono ingredienti, valori nutrizionali, shelf life, conservazione, EAN e pallettizzazione, in inglese."
+      }
+    },
+    {
+      "id": "com5",
+      "area": "com",
+      "label": "Listino prezzi",
+      "source": {
+        "type": "question",
+        "question": "com5"
+      },
+      "texts": {
+        "strength": "Listino export strutturato, con condizioni chiare.",
+        "weakness": "Non c'è un listino pensato per l'estero: i prezzi si costruiscono a ogni richiesta, con perdita di tempo e credibilità.",
+        "suggestion": "Un listino export parte dal prezzo franco azienda (EXW) e indica minimi d'ordine, formati e tempi di consegna."
+      }
+    },
+    {
+      "id": "com6",
+      "area": "com",
+      "label": "Presentazione ai buyer",
+      "source": {
+        "type": "question",
+        "question": "com6"
+      },
+      "texts": {
+        "strength": "Hai già una presentazione commerciale pronta per i buyer.",
+        "weakness": "Manca una presentazione commerciale efficace, e il primo contatto è il momento in cui si perde la maggior parte dei buyer.",
+        "suggestion": "Bastano poche righe in inglese: chi sei, cosa ti distingue, cosa proponi a quel tipo di cliente."
+      }
+    },
+    {
+      "id": "com7",
+      "area": "com",
+      "label": "Presenza sui social",
+      "source": {
+        "type": "question",
+        "question": "com7"
+      },
+      "texts": {
+        "strength": "Presenza social attiva: il buyer trova un'azienda viva.",
+        "weakness": "Senza una presenza social curata il buyer non ha modo di verificare che l'azienda sia attiva.",
+        "suggestion": "Bastano 1-2 post a settimana con foto vere di prodotti, persone e territorio. LinkedIn è il canale dei buyer."
+      }
+    },
+    {
+      "id": "org1",
+      "area": "org",
+      "label": "Chi segue l'export",
+      "source": {
+        "type": "question",
+        "question": "org1"
+      },
+      "texts": {
+        "strength": "C'è una persona dedicata all'export.",
+        "weakness": "L'export non ha una persona dedicata: senza continuità i contatti con i buyer si raffreddano.",
+        "suggestion": "Serve qualcuno che segua i buyer con costanza, interno all'azienda oppure in outsourcing."
+      }
+    },
+    {
+      "id": "org2",
+      "area": "org",
+      "label": "Tempi di risposta",
+      "source": {
+        "type": "question",
+        "question": "org2"
+      },
+      "texts": {
+        "strength": "Tempi di risposta rapidi, un vantaggio concreto con i buyer.",
+        "weakness": "Tempi di risposta lenti, che per un buyer estero sono il primo segnale di inaffidabilità.",
+        "suggestion": "Datti una regola: risposta entro 48 ore, anche solo per dire quando arriveranno le informazioni."
+      }
+    },
+    {
+      "id": "org3",
+      "area": "org",
+      "label": "Lingue straniere",
+      "source": {
+        "type": "question",
+        "question": "org3"
+      },
+      "texts": {
+        "strength": "In azienda c'è chi gestisce bene l'inglese.",
+        "weakness": "Le lingue sono un limite: ogni scambio con un buyer diventa lento e faticoso.",
+        "suggestion": "Almeno una persona deve poter sostenere una call in inglese, oppure va affiancata."
+      }
+    },
+    {
+      "id": "org4",
+      "area": "org",
+      "label": "Capacità produttiva",
+      "source": {
+        "type": "question",
+        "question": "org4"
+      },
+      "texts": {
+        "strength": "Capacità produttiva in grado di reggere ordini export.",
+        "weakness": "Capacità produttiva o scorte non reggono ancora un ordine export standard.",
+        "suggestion": "Calcola quanta produzione puoi riservare all'estero ogni anno: è una delle prime domande di un importatore."
+      }
+    },
+    {
+      "id": "org5",
+      "area": "org",
+      "label": "Tempo per l'export",
+      "source": {
+        "type": "question",
+        "question": "org5"
+      },
+      "texts": {
+        "strength": "L'azienda può dedicare all'export un tempo costante ogni settimana.",
+        "weakness": "Il tempo dedicabile all'export è poco: senza continuità i buyer si perdono.",
+        "suggestion": "Anche in un'azienda piccola bastano poche ore fisse a settimana, purché costanti; il resto si può affidare a un ufficio export esterno."
+      }
+    },
+    {
+      "id": "off1",
+      "area": "off",
+      "label": "Distintività del prodotto",
+      "source": {
+        "type": "question",
+        "question": "off1"
+      },
+      "texts": {
+        "strength": "Il prodotto ha elementi distintivi concreti da far valere con i buyer.",
+        "weakness": "Il prodotto non ha ancora un elemento distintivo chiaro, e con il buyer la conversazione scivola subito sul prezzo.",
+        "suggestion": "Individua 2-3 fatti verificabili che rendono unico il prodotto e mettili al centro di ogni presentazione."
+      }
+    },
+    {
+      "id": "off2",
+      "area": "off",
+      "label": "Affollamento della categoria",
+      "source": {
+        "type": "category"
+      },
+      "texts": {
+        "strength": "La tua categoria ha spazio sui mercati esteri, con meno concorrenza della media.",
+        "weakness": "La tua categoria è molto affollata all'estero: tanti produttori italiani si contendono gli stessi buyer.",
+        "suggestion": "In una categoria affollata vince chi sceglie bene mercati e canali: meglio pochi mercati mirati che una lista generica."
+      }
+    },
+    {
+      "id": "off3",
+      "area": "off",
+      "label": "Condizioni di vendita",
+      "source": {
+        "type": "question",
+        "question": "off3"
+      },
+      "texts": {
+        "strength": "Condizioni di vendita definite e chiare.",
+        "weakness": "Mancano condizioni di vendita definite (minimi, sconti, pagamenti), e ogni trattativa riparte da zero.",
+        "suggestion": "Scrivi le tue condizioni: minimo d'ordine, sconti per volume, termini di pagamento e di consegna."
+      }
+    },
+    {
+      "id": "off4",
+      "area": "off",
+      "label": "Certificazioni",
+      "source": {
+        "type": "weighted_multi",
+        "question": "off4",
+        "base": 1,
+        "max": 5,
+        "none_key": "none"
+      },
+      "texts": {
+        "strength": "Certificazioni che aprono porte, anche nei mercati più esigenti.",
+        "weakness": "Poche certificazioni: alcuni canali, come la grande distribuzione, e alcuni mercati, come Asia e Stati Uniti, restano più difficili.",
+        "suggestion": "Tieni pronte analisi di laboratorio recenti e valuta le certificazioni richieste nei mercati che ti interessano."
+      }
+    },
+    {
+      "id": "off5",
+      "area": "off",
+      "label": "Formati e personalizzazioni",
+      "source": {
+        "type": "question",
+        "question": "off5"
+      },
+      "texts": {
+        "strength": "Gamma di formati adatta a più canali.",
+        "weakness": "Gamma di formati ridotta: alcuni canali, come la ristorazione, chiedono formati diversi.",
+        "suggestion": "Valuta un formato per la ristorazione: all'estero è spesso il canale d'ingresso dei prodotti italiani."
+      }
+    },
+    {
+      "id": "esp1",
+      "area": "esp",
+      "label": "Fiere ed eventi",
+      "source": {
+        "type": "question",
+        "question": "esp1"
+      },
+      "texts": {
+        "strength": "Esperienza di fiere da espositore.",
+        "weakness": "Poca esperienza di fiere di settore, dove si incontra buona parte dei buyer.",
+        "suggestion": "Prima di esporre, visita una fiera di settore con un obiettivo preciso: capire chi compra e a quali prezzi."
+      }
+    },
+    {
+      "id": "esp2",
+      "area": "esp",
+      "label": "Incoterms",
+      "source": {
+        "type": "question",
+        "question": "esp2"
+      },
+      "texts": {
+        "strength": "Buona padronanza degli Incoterms.",
+        "weakness": "Gli Incoterms non sono familiari, ed è proprio lì che nascono i malintesi su costi e responsabilità.",
+        "suggestion": "Parti da EXW e FCA: chiariscono chi paga il trasporto e chi risponde della merce, e fino a dove."
+      }
+    },
+    {
+      "id": "esp3",
+      "area": "esp",
+      "label": "Spedizioni",
+      "source": {
+        "type": "question",
+        "question": "esp3"
+      },
+      "texts": {
+        "strength": "Esperienza concreta di spedizioni internazionali.",
+        "weakness": "Poca esperienza di spedizioni internazionali e di documenti doganali.",
+        "suggestion": "Individua uno spedizioniere di riferimento e fatti preparare un preventivo tipo per un bancale verso un paese europeo."
+      }
+    },
+    {
+      "id": "esp4",
+      "area": "esp",
+      "label": "Vendite all'estero",
+      "source": {
+        "type": "question",
+        "question": "esp4"
+      },
+      "texts": {
+        "strength": "Vendite estere già avviate con continuità.",
+        "weakness": "Non ci sono ancora vendite estere strutturate: i mercati vanno costruiti da zero.",
+        "suggestion": "Le prime vendite servono a imparare: meglio pochi mercati seguiti bene."
+      }
+    },
+    {
+      "id": "esp5",
+      "area": "esp",
+      "label": "Pagamenti internazionali",
+      "source": {
+        "type": "question",
+        "question": "esp5"
+      },
+      "texts": {
+        "strength": "Buona conoscenza degli strumenti di pagamento internazionali.",
+        "weakness": "Poca familiarità con i pagamenti internazionali, e il rischio di insoluti è reale.",
+        "suggestion": "Al primo ordine chiedi il pagamento anticipato; per ordini ripetuti valuta un'assicurazione del credito."
+      }
+    },
+    {
+      "id": "esp6",
+      "area": "esp",
+      "label": "Aspettative su tempi e budget",
+      "source": {
+        "type": "average",
+        "questions": [
+          "esp6a",
+          "esp6b"
+        ]
+      },
+      "texts": {
+        "strength": "Aspettative realistiche su tempi e investimenti.",
+        "weakness": "Aspettative poco realistiche su tempi o investimenti: è la prima causa di abbandono dei progetti export.",
+        "suggestion": "Un mercato estero si costruisce in 12-24 mesi. Meglio partire con un test a costo contenuto che con un grande investimento e l'attesa di ritorni immediati."
+      }
+    }
+  ],
+  "categories": [
+    {
+      "label": "Olio extravergine d'oliva",
+      "score": 3
+    },
+    {
+      "label": "Vino",
+      "score": 2.5
+    },
+    {
+      "label": "Pasta",
+      "score": 3.5
+    },
+    {
+      "label": "Conserve, sughi e sottoli",
+      "score": 3
+    },
+    {
+      "label": "Formaggi e latticini",
+      "score": 1.5
+    },
+    {
+      "label": "Salumi",
+      "score": 2
+    },
+    {
+      "label": "Prodotti da forno e dolci",
+      "score": 2.5
+    },
+    {
+      "label": "Birra, liquori e distillati",
+      "score": 3.5
+    },
+    {
+      "label": "Miele, confetture e creme",
+      "score": 4.5
+    },
+    {
+      "label": "Legumi, cereali e farine",
+      "score": 4
+    },
+    {
+      "label": "Ortofrutta fresca",
+      "score": 1.5
+    },
+    {
+      "label": "Caffè",
+      "score": 3.5
+    },
+    {
+      "label": "Surgelati e piatti pronti",
+      "score": 2.5
+    },
+    {
+      "label": "Altro",
+      "score": 3
+    }
+  ],
+  "category_method": "(2 x Concorrenza + Barriere + Logistica) / 4, arrotondato a 0,5. Concorrenza dal valore dell'export italiano 2025 (Istat/MAECI). Olio: concorrenza corretta a 1 come valutazione IAGAIN.",
+  "scenarios": {
+    "rtw": {
+      "name": "Road to World",
+      "label": "con Road to World",
+      "items": [
+        {
+          "indicator": "com4",
+          "target": 4,
+          "text": "Ti assistiamo nel completare le schede tecniche in inglese con i dati che i buyer chiedono."
+        },
+        {
+          "indicator": "com5",
+          "target": 4,
+          "text": "Ti assistiamo nell'impostare un listino utilizzabile con i buyer dei mercati del test."
+        },
+        {
+          "indicator": "com6",
+          "target": 5,
+          "text": "Il WEM presenta la tua azienda ai buyer dei 3-5 mercati scelti, in inglese."
+        },
+        {
+          "indicator": "org1",
+          "target": 4,
+          "text": "Per 4 mesi il WEM segue al posto tuo i buyer dei mercati del test."
+        },
+        {
+          "indicator": "org2",
+          "target": 4,
+          "text": "Il WEM risponde ai buyer nei tempi che il mercato si aspetta."
+        },
+        {
+          "indicator": "org3",
+          "target": 4,
+          "text": "La corrispondenza con i buyer passa dal WEM."
+        },
+        {
+          "indicator": "off3",
+          "target": 3,
+          "text": "Ti aiutiamo a fissare minimi d'ordine e condizioni base per le prime richieste."
+        },
+        {
+          "indicator": "esp2",
+          "target": 4,
+          "text": "Le prime offerte ai buyer partono con gli Incoterms corretti, e ti spieghiamo come leggerli."
+        },
+        {
+          "indicator": "esp3",
+          "target": 3,
+          "text": "Ti guidiamo nell'invio delle campionature."
+        },
+        {
+          "indicator": "esp5",
+          "target": 4,
+          "text": "Ti indichiamo termini di pagamento sicuri per i primi ordini."
+        }
+      ]
+    },
+    "eo": {
+      "name": "WIFO Export Office",
+      "label": "con WIFO Export Office",
+      "items": [
+        {
+          "indicator": "com4",
+          "target": 5,
+          "text": "Il WEM prepara schede tecniche in inglese complete di dati logistici e segue adeguamenti di etichetta e documentazione."
+        },
+        {
+          "indicator": "com5",
+          "target": 5,
+          "text": "Il WEM costruisce listini franco destino in lingua, con minimi d'ordine e condizioni."
+        },
+        {
+          "indicator": "com6",
+          "target": 5,
+          "text": "Il WEM prepara cataloghi e presentazioni in lingua e presenta l'azienda ai buyer con continuità."
+        },
+        {
+          "indicator": "org1",
+          "target": 5,
+          "text": "Il WEM diventa per 12 mesi il tuo ufficio export: una persona dedicata, con le lingue, che lavora sui tuoi mercati."
+        },
+        {
+          "indicator": "org2",
+          "target": 4,
+          "text": "Il WEM risponde ai buyer nei tempi che il mercato si aspetta."
+        },
+        {
+          "indicator": "org3",
+          "target": 4,
+          "text": "La corrispondenza con i buyer passa dal WEM, in inglese e nelle lingue dei mercati."
+        },
+        {
+          "indicator": "off3",
+          "target": 4,
+          "text": "Definiamo con te condizioni di vendita per l'estero, differenziate per canale."
+        },
+        {
+          "indicator": "esp1",
+          "target": 4,
+          "text": "Con l'add-on Fiera internazionale il WEM è allo stand con te, con appuntamenti preparati in anticipo."
+        },
+        {
+          "indicator": "esp2",
+          "target": 5,
+          "text": "Il WEM gestisce offerte e trattative con gli Incoterms corretti."
+        },
+        {
+          "indicator": "esp3",
+          "target": 4,
+          "text": "Il WEM segue campionature, documenti e spedizioni, fino al riordino."
+        },
+        {
+          "indicator": "esp5",
+          "target": 5,
+          "text": "Impostiamo termini di pagamento sicuri e, quando serve, coperture assicurative sul credito."
+        }
+      ]
+    }
+  },
+  "blockers": [
+    {
+      "source": "indicator",
+      "id": "org4",
+      "if_lte": 1,
+      "title": "Capacità produttiva",
+      "text": "Oggi non riesci a evadere un ordine export di un bancale. Prima di cercare buyer serve capire quanta produzione puoi riservare all'estero."
+    },
+    {
+      "source": "indicator",
+      "id": "org5",
+      "if_lte": 1,
+      "title": "Tempo per l'export",
+      "text": "Non hai tempo da dedicare all'export. Anche con un WEM che lavora per te, servono risposte rapide su prezzi, campioni e produzione."
+    },
+    {
+      "source": "question",
+      "id": "esp6b",
+      "if_lte": 1,
+      "title": "Budget",
+      "text": "Non prevedi alcun investimento prima di vedere risultati. Ogni percorso export, anche un test, richiede un investimento iniziale in materiali, campioni e presidio."
+    }
+  ],
+  "markets_of_interest": [
+    "Germania",
+    "Austria e Svizzera",
+    "Francia",
+    "Benelux",
+    "Paesi nordici",
+    "Regno Unito",
+    "Europa dell'Est",
+    "Stati Uniti",
+    "Canada",
+    "Giappone",
+    "Corea del Sud",
+    "Cina e Hong Kong",
+    "Sud-Est asiatico",
+    "Medio Oriente",
+    "Australia",
+    "Non saprei"
+  ],
+  "links": {
+    "rtw_booking": "https://meet.brevo.com/iagain/road-to-world",
+    "rtw_landing": "https://www.iagain.it/roadtoworld",
+    "eo_booking": "https://meet.brevo.com/iagain",
+    "privacy": "https://www.iagain.it/privacy-policy/",
+    "site": "https://www.iagain.it"
+  },
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-10-31",
+      "note": "Prima versione del metodo."
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-10-31",
+      "note": "Solo aggiunte, punteggi invariati: regola di raccomandazione in forma leggibile dal motore (rules.recommend.when), testi dei servizi (services) e testi del profilo (texts), presi dal prototipo."
+    }
+  ],
+  "services": {
+    "rtw": {
+      "name": "Road to World",
+      "short": "RTW",
+      "tag": "Il passo che ti consigliamo",
+      "desc": "Un test di 4 mesi su 3-5 mercati esteri scelti con te, per capire se l'export è una strada percorribile per la tua azienda prima di fare investimenti importanti.",
+      "why": [
+        {
+          "if": {
+            "indicator": "esp4",
+            "lte": 2
+          },
+          "text": "Non hai ancora vendite estere strutturate: conviene verificare l'interesse reale dei buyer prima di investire.",
+          "else": "Il tuo grado di maturità è sotto la soglia minima export: conviene testare i mercati prima di investire di più."
+        },
+        {
+          "text": "Lavoriamo sui mercati con le nostre liste di buyer e ti riportiamo interessi, richieste di campioni e trattative."
+        },
+        {
+          "text": "Costo fisso e definito, da 1.200 €, senza contratti annuali."
+        }
+      ],
+      "cta": "Prenota la call di valutazione (30 min)",
+      "cta_link": "rtw_booking",
+      "more": "Scopri Road to World",
+      "more_link": "rtw_landing",
+      "scenario_note": "Road to World è un test di 4 mesi: lavora sui contatti con i buyer, non costruisce l'ufficio export. Il salto completo arriva con WIFO Export Office.",
+      "alt_line": "Hai già le idee chiare sui mercati? Valuta WIFO Export Office.",
+      "alt_long": "Se hai già le idee chiare sui mercati e vuoi un presidio continuativo, valuta WIFO Export Office, il nostro ufficio export in outsourcing."
+    },
+    "eo": {
+      "name": "WIFO Export Office",
+      "short": "EO",
+      "tag": "Il passo che ti consigliamo",
+      "desc": "Il tuo ufficio export in outsourcing: un WEM (WIFO Export Manager) dedicato crea, sviluppa e presidia i tuoi mercati esteri con il metodo WIFO®, con un contratto annuale.",
+      "why": [
+        {
+          "text": "Hai le basi per lavorare con l'estero: il salto di qualità viene dalla continuità commerciale."
+        },
+        {
+          "text": "Il WEM interviene subito sugli indicatori dove oggi perdi punti: {lifted}.",
+          "lifted_fallback": "presidio e metodo",
+          "lifted_max": 3
+        },
+        {
+          "text": "Nessun limite al numero di mercati: si parte da quelli con il miglior rapporto potenziale/sforzo."
+        }
+      ],
+      "cta": "Prenota una call conoscitiva (20 min)",
+      "cta_link": "eo_booking",
+      "more": "Visita iagain.it",
+      "more_link": "site",
+      "scenario_note": null,
+      "alt_line": "Preferisci prima testare i mercati? C'è Road to World: 4 mesi, 3-5 mercati, da 1.200 €.",
+      "alt_long": "Se preferisci prima testare i mercati con un investimento contenuto, c'è Road to World: 4 mesi, 3-5 mercati, da 1.200 €."
+    }
+  },
+  "texts": {
+    "empty_strengths": "Nessun punto di forza marcato in quest'area.",
+    "empty_weaknesses": "Nessuna debolezza critica in quest'area.",
+    "empty_suggestions": "Area in linea con la soglia minima export: mantieni il livello attuale.",
+    "blockers_kicker": "Prima di tutto",
+    "blockers_title_one": "C'è un fattore che blocca il percorso export, a prescindere dal punteggio",
+    "blockers_title_many": "Ci sono {n} fattori che bloccano il percorso export, a prescindere dal punteggio",
+    "blockers_before_service_one": "Prima di partire va risolto il fattore bloccante indicato nella sezione 01. Possiamo parlarne nella call.",
+    "blockers_before_service_many": "Prima di partire vanno risolti i fattori bloccanti indicati nella sezione 01. Possiamo parlarne nella call.",
+    "scenario_same_level": "Con {service} il punteggio sale di {delta} punti all'interno dello stesso grado. Il margine più grande dipende dagli aspetti che restano in mano all'azienda.",
+    "scenario_level_up": "Con {service} il tuo grado di maturità passa da {from} a {to}.",
+    "lifted_empty": "I tuoi indicatori operativi sono già al livello che raggiungiamo di norma con i clienti.",
+    "yours_empty": "Gli aspetti che dipendono direttamente dall'azienda sono già almeno in linea con la soglia minima.",
+    "markets_line": "Mercati che ti interessano: {markets}. Ne parliamo nella call, con i dati sulla domanda per la tua categoria.",
+    "areas_lead": "Ogni area è la media dei suoi indicatori, da 1 a 5. Sotto il {threshold}, livello minimo export, un buyer estero tende a notare le lacune prima del prodotto.",
+    "method_short": "Il profilo valuta 23 indicatori da 1 a 5 in 4 aree; il grado è la media delle aree. Si basa sulle risposte date nel questionario ed è una fotografia di partenza: in una call un nostro WEM lo verifica con te.",
+    "method": [
+      "Il profilo valuta 23 indicatori su una scala da 1 a 5, raggruppati in 4 aree. Il grado di maturità è la media delle 4 aree. Il {threshold} è il livello minimo per affrontare con continuità un mercato estero.",
+      "Lo scenario \"{scenario}\" alza solo gli indicatori su cui quel servizio incide direttamente, al livello che raggiunge di norma. Gli altri restano invariati, perché dipendono dalle scelte dell'azienda. I fattori bloccanti sono segnalati a parte e la media non li assorbe.",
+      "Il profilo si basa sulle risposte date nel questionario ed è una fotografia di partenza."
+    ],
+    "method_unsigned": "In una call un nostro WEM lo verifica con te e lo completa con l'analisi dei tuoi materiali.",
+    "method_signed": "Verificato da {wem}, WEM IAGAIN.",
+    "wem_note_label": "Nota del WEM.",
+    "question_hint_default": "Scegli la risposta più vicina a come stanno le cose oggi.",
+    "why_prefix": "Perché te lo chiediamo:",
+    "autosave_note": "Le risposte si salvano mentre procedi: puoi chiudere e riprendere più tardi.",
+    "markets_question": "Su quali mercati ti piacerebbe vendere?",
+    "markets_hint": "Facoltativo. Non entra nel punteggio, ci aiuta a capire i tuoi obiettivi.",
+    "sample_flag": "Profilo d'esempio con dati inventati",
+    "anag": {
+      "azienda": "Nome dell'azienda",
+      "referente": "Nome e cognome",
+      "ruolo": "Ruolo in azienda",
+      "email": "Email",
+      "telefono": "Telefono",
+      "regione": "Regione",
+      "sito": "Sito web",
+      "sito_placeholder": "www.tuaazienda.it",
+      "nosito": "Non abbiamo un sito",
+      "categoria": "Categoria principale dei tuoi prodotti",
+      "categoria_placeholder": "Scegli…",
+      "privacy": "Ho letto l'informativa privacy e acconsento al trattamento dei miei dati per ricevere l'Export Profile ed essere ricontattato da IAGAIN.",
+      "privacy_link_text": "informativa privacy",
+      "marketing": "Desidero ricevere comunicazioni di IAGAIN su mercati esteri, bandi e servizi (facoltativo).",
+      "retention": "Se non completi il questionario, ti invieremo fino a 3 promemoria per riprenderlo; dopo 14 giorni dall'ultima attività le risposte vengono cancellate."
+    },
+    "level_short": {
+      "Esordiente": "Basi ancora da costruire",
+      "Apprendista": "Basi parziali, lacune da colmare",
+      "Specialista": "Ha le basi per l'estero",
+      "Esperto": "Pronta per nuovi mercati e canali",
+      "Campione": "Export maturo e presidiato"
+    },
+    "area_short": {
+      "com": "Come ti presenti a un buyer che non ti conosce.",
+      "org": "Chi segue l'export, con quali tempi e lingue.",
+      "off": "Prodotto, certificazioni e condizioni di vendita.",
+      "esp": "Fiere, Incoterms, spedizioni, pagamenti, aspettative."
+    }
+  }
+}
