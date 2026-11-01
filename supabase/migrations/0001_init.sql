@@ -12,7 +12,7 @@ create table public.profiles (
   completed_at      timestamptz,
   spec_version      text not null,
   status            text not null default 'in_corso' check (status in ('in_corso', 'completato')),
-  -- accesso del lead: si salva solo l'hash del token del link personale
+  -- accesso del lead: hash del token del link personale (per la ricerca)
   token_hash        text not null unique,
   -- token cifrato (AES-256-GCM, chiave TOKEN_ENC_KEY) per i link nei promemoria
   token_enc         text not null,

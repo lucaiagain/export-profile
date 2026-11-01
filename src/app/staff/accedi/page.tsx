@@ -23,7 +23,10 @@ async function sendLink(form: FormData) {
     email,
     options: { emailRedirectTo: `${origin}/staff/auth/callback`, shouldCreateUser: true },
   });
-  if (error) redirect("/staff/accedi?e=invio");
+  if (error) {
+    console.error("Supabase Auth: link non inviato", { email, code: error.code, status: error.status, message: error.message });
+    redirect("/staff/accedi?e=invio");
+  }
   redirect("/staff/accedi?ok=1");
 }
 
