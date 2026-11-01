@@ -18,7 +18,7 @@ export async function POST(req: Request) {
   if (await db().rateLimit(`pdf:${p.id}`, 3600, 5)) return NextResponse.json({ error: "Hai già richiesto il PDF più volte: riprova più tardi." }, { status: 429 });
 
   const pdf = await renderProfilePdf(viewForRow(p));
-  const mail = pdfEmail(p, `${config.siteUrl}/profilo/${bearer(req)}`);
+  const mail = pdfEmail(p, { site: config.siteUrl, profileUrl: `${config.siteUrl}/profilo/${bearer(req)}`, fromMailbox: config.mailFrom });
   const sent = await sendMail({
     to: { email: p.email, name: p.contact_name },
     subject: mail.subject,

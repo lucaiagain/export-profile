@@ -51,7 +51,7 @@ async function sendPdf(form: FormData) {
   const p = await db().getProfile(id);
   if (!p || !p.result) notFound();
   const pdf = await renderProfilePdf(viewForRow(p));
-  const mail = pdfEmail(p, `${config.siteUrl}/profilo/${decryptToken(p.token_enc)}`);
+  const mail = pdfEmail(p, { site: config.siteUrl, profileUrl: `${config.siteUrl}/profilo/${decryptToken(p.token_enc)}`, fromMailbox: config.mailFrom });
   const ok = await sendMail({ to: { email: p.email, name: p.contact_name }, subject: mail.subject, html: mail.html, attachment: { name: pdfFileName(p.company_name), content: pdf } });
   if (ok) await db().updateProfile(id, { pdf_sent_at: new Date().toISOString() });
   redirect(`/staff/${id}?${ok ? "inviato=1" : "invio=off"}`);

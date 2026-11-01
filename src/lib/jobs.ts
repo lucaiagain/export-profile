@@ -5,7 +5,9 @@ import { sendMail } from "@/lib/mail";
 import { config } from "@/lib/config";
 import { db } from "@/lib/db";
 import { reminderEmail } from "@/lib/emails";
+import { visibleQuestions } from "@/lib/engine";
 import { decryptToken } from "@/lib/security";
+import { spec } from "@/lib/spec";
 
 const DAY = 86_400_000;
 
@@ -41,13 +43,15 @@ export async function runReminders(now = new Date()) {
     const n = dueReminder(idle, already);
     if (!n) continue;
     const token = decryptToken(p.token_enc);
-    const mail = reminderEmail(
-      p,
-      n,
-      `${config.siteUrl}/questionario?k=${token}`,
-      `${config.siteUrl}/disiscriviti/${token}`,
-      Math.max(1, Math.ceil(config.retentionDays - idle)),
-    );
+    const visible = visibleQuestions(spec, { ...p.answers, nosito: p.no_website });
+    const mail = reminderEmail(p, n, {
+      site: config.siteUrl,
+      resumeUrl: `${config.siteUrl}/questionario?k=${token}`,
+      unsubscribeUrl: `${config.siteUrl}/disiscriviti/${token}`,
+      deleteInDays: Math.max(1, config.retentionDays - idle),
+      answered: visible.filter((q) => p.answers[q.id] !== undefined).length,
+      total: visible.length,
+    });
     await sendMail({ to: { email: p.email, name: p.contact_name }, subject: mail.subject, html: mail.html });
     for (let k = 1; k <= n; k++) if (!already.includes(k)) await store.addReminder(p.id, k);
     sent++;
