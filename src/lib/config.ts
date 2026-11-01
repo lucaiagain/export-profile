@@ -28,7 +28,13 @@ export const config = {
   brevoEnabled: flag("BREVO_ENABLED"),
   brevoApiKey: env("BREVO_API_KEY"),
   brevoListId: env("BREVO_LIST_ID") ? Number(env("BREVO_LIST_ID")) : undefined,
+  /** Invio email via SMTP (Aruba: smtps.aruba.it, 465, SSL). Senza SMTP_HOST non parte nulla. */
+  smtpHost: env("SMTP_HOST"),
+  smtpPort: Number(env("SMTP_PORT", "465")),
+  smtpUser: env("SMTP_USER"),
+  smtpPass: env("SMTP_PASS"),
   mailFrom: env("MAIL_FROM", "exportprofile@iagain.it"),
+  mailReplyTo: env("MAIL_REPLY_TO"),
   mailFromName: env("MAIL_FROM_NAME", "IAGAIN Export Profile"),
 
   miaEnabled: flag("MIA_ENABLED"),

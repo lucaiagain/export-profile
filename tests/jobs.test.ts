@@ -7,10 +7,10 @@ const file = path.join(fs.mkdtempSync(path.join(os.tmpdir(), "ep-")), "db.json")
 process.env.DEV_DB_FILE = file;
 
 const mails: { to: string; subject: string }[] = [];
-vi.mock("@/lib/brevo", () => ({
+vi.mock("@/lib/mail", () => ({
   sendMail: async (m: { to: { email: string }; subject: string }) => (mails.push({ to: m.to.email, subject: m.subject }), true),
-  deleteContact: async () => true,
 }));
+vi.mock("@/lib/brevo", () => ({ deleteContact: async () => true }));
 
 const { db } = await import("@/lib/db");
 const { calendarDays, runCleanup, runReminders, dueReminder } = await import("@/lib/jobs");

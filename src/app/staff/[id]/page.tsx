@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { Profile, ProfileHeader } from "@/components/Profile";
-import { sendMail } from "@/lib/brevo";
+import { sendMail } from "@/lib/mail";
 import { config } from "@/lib/config";
 import { db } from "@/lib/db";
 import { pdfEmail } from "@/lib/emails";
@@ -97,7 +97,7 @@ export default async function StaffProfile({ params, searchParams }: { params: P
           <span>{p.contact_name} · <a href={`mailto:${p.email}`}>{p.email}</a> · {p.phone}{p.website ? ` · ${p.website}` : ""}</span>
           {sp.salvato && <span className={st.ok} role="status">Correzioni salvate e profilo ricalcolato.</span>}
           {sp.inviato && <span className={st.ok} role="status">PDF inviato a {p.email}.</span>}
-          {sp.invio === "off" && <span className="field-error" role="status">Invio email non attivo (Brevo): usa “Scarica PDF”.</span>}
+          {sp.invio === "off" && <span className="field-error" role="status">Invio email non ancora configurato (SMTP): usa “Scarica PDF”.</span>}
         </div>
         <form id="wem" action={saveWem} className={st.wemForm}>
           <input type="hidden" name="id" value={id} />

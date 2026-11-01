@@ -1,6 +1,7 @@
 // Job pianificati: promemoria per i questionari non completati e cancellazione dopo RETENTION_DAYS.
 import "server-only";
-import { deleteContact, sendMail } from "@/lib/brevo";
+import { deleteContact } from "@/lib/brevo";
+import { sendMail } from "@/lib/mail";
 import { config } from "@/lib/config";
 import { db } from "@/lib/db";
 import { reminderEmail } from "@/lib/emails";

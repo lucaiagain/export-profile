@@ -2,7 +2,7 @@
 
 App pubblica per **exportprofile.iagain.it**: questionario di 23 domande, profilo export immediato, PDF via email, area staff con modalità WEM. Istruzioni di partenza in `riferimenti/ISTRUZIONI_CODE_export_profile_v2.md`.
 
-Stack: Next.js 15 (App Router) · TypeScript · Supabase (Postgres con RLS) · Vercel · Brevo.
+Stack: Next.js 15 (App Router) · TypeScript · Supabase (Postgres con RLS) · Vercel · SMTP Aruba per le email · Brevo per i contatti.
 
 ## Struttura
 
@@ -48,12 +48,10 @@ npm run build
 3. **Dominio**: in Vercel aggiungere `exportprofile.iagain.it`, poi nel DNS di iagain.it creare il record
    `exportprofile  CNAME  cname.vercel-dns.com.` (Vercel conferma il valore esatto nella schermata del dominio).
 4. **Turnstile**: in Cloudflare creare un widget per `exportprofile.iagain.it` e inserire le due chiavi.
-5. **Brevo** (quando arriva la chiave):
-   - verificare il mittente `exportprofile@iagain.it` e il dominio (record SPF/DKIM indicati da Brevo);
-   - creare gli attributi contatto: `EP_AZIENDA` (testo), `EP_PUNTEGGIO` (numero), `EP_GRADO`, `EP_SERVIZIO`, `EP_BLOCCANTI`, `EP_CATEGORIA`, `EP_MERCATI` (testo), `EP_MARKETING` (booleano);
-   - impostare `BREVO_API_KEY`, `BREVO_LIST_ID` (facoltativo) e `BREVO_ENABLED=true`.
-   Finché è disattivato, i lead si salvano solo nel database e i promemoria/PDF non partono.
-6. **M.IA** (quando avrà l'area marketing): impostare `MIA_ENDPOINT`, `MIA_HMAC_SECRET`, `MIA_ENABLED=true`. La coda `outbox_mia` contiene già i profili raccolti: partono al primo giro.
+5. **Email (Aruba)**: creare su Aruba la casella `exportprofile@iagain.it` e impostare `SMTP_HOST=smtps.aruba.it`, `SMTP_PORT=465`, `SMTP_USER`, `SMTP_PASS` (e se serve `MAIL_REPLY_TO`). L'SPF di iagain.it autorizza già Aruba. Le stesse credenziali vanno in Supabase → *Authentication → Emails → SMTP Settings* per i link di accesso dello staff.
+   Senza SMTP i lead si salvano comunque; promemoria e PDF via email non partono.
+6. **Brevo** (quando arriva la chiave), solo per i contatti: creare gli attributi `EP_AZIENDA` (testo), `EP_PUNTEGGIO` (numero), `EP_GRADO`, `EP_SERVIZIO`, `EP_BLOCCANTI`, `EP_CATEGORIA`, `EP_MERCATI` (testo), `EP_MARKETING` (booleano); impostare `BREVO_API_KEY`, `BREVO_LIST_ID` (facoltativo) e `BREVO_ENABLED=true`.
+7. **M.IA** (quando avrà l'area marketing): impostare `MIA_ENDPOINT`, `MIA_HMAC_SECRET`, `MIA_ENABLED=true`. La coda `outbox_mia` contiene già i profili raccolti: partono al primo giro.
 
 ## Contratto verso M.IA
 

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { sendMail } from "@/lib/brevo";
+import { sendMail } from "@/lib/mail";
 import { config } from "@/lib/config";
 import { db } from "@/lib/db";
 import { pdfEmail } from "@/lib/emails";
@@ -10,6 +10,7 @@ import { viewForRow } from "@/lib/profile-view";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
+export const maxDuration = 60;
 
 export async function POST(req: Request) {
   const p = await profileFromRequest(req);

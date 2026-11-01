@@ -6,6 +6,7 @@ import { staffEmail } from "@/lib/staff-auth";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
+export const maxDuration = 60;
 
 export async function GET(_req: Request, { params }: { params: Promise<{ id: string }> }) {
   if (!(await staffEmail())) return NextResponse.json({ error: "Non autorizzato" }, { status: 401 });

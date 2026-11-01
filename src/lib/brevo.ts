@@ -1,8 +1,5 @@
-// Brevo: contatti e email transazionali. Con BREVO_ENABLED=false non parte nulla:
-// in sviluppo le email finiscono in .data/mail/ per poterle controllare.
+// Brevo: solo contatti (CRM). Le email partono via SMTP (src/lib/mail.ts).
 import "server-only";
-import fs from "node:fs";
-import path from "node:path";
 import { config } from "@/lib/config";
 
 const API = "https://api.brevo.com/v3";
@@ -34,35 +31,5 @@ export async function upsertContact(email: string, attributes: Record<string, st
 export async function deleteContact(email: string) {
   if (!brevoActive()) return false;
   await call("DELETE", `/contacts/${encodeURIComponent(email)}`);
-  return true;
-}
-
-export interface Mail {
-  to: { email: string; name?: string };
-  subject: string;
-  html: string;
-  attachment?: { name: string; content: Buffer };
-}
-
-/** Invia un'email transazionale. Restituisce false se l'invio è disattivato. */
-export async function sendMail(m: Mail): Promise<boolean> {
-  if (!brevoActive()) {
-    if (process.env.NODE_ENV !== "production") {
-      const dir = path.join(process.cwd(), ".data", "mail");
-      fs.mkdirSync(dir, { recursive: true });
-      const base = `${new Date().toISOString().replace(/[:.]/g, "-")}_${m.to.email.replace(/[^a-z0-9]/gi, "_")}`;
-      fs.writeFileSync(path.join(dir, base + ".html"), `<!-- A: ${m.to.email} · Oggetto: ${m.subject} -->\n${m.html}`);
-      if (m.attachment) fs.writeFileSync(path.join(dir, base + "_" + m.attachment.name), m.attachment.content);
-    }
-    console.info(`[mail disattivata] ${m.to.email} · ${m.subject}`);
-    return false;
-  }
-  await call("POST", "/smtp/email", {
-    sender: { email: config.mailFrom, name: config.mailFromName },
-    to: [m.to],
-    subject: m.subject,
-    htmlContent: m.html,
-    ...(m.attachment ? { attachment: [{ name: m.attachment.name, content: m.attachment.content.toString("base64") }] } : {}),
-  });
   return true;
 }
