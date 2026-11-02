@@ -13,7 +13,7 @@ vi.mock("@/lib/mail", () => ({
 vi.mock("@/lib/brevo", () => ({ deleteContact: async () => true }));
 
 const { db } = await import("@/lib/db");
-const { calendarDays, runCleanup, runReminders, dueReminder } = await import("@/lib/jobs");
+const { calendarDays, monthsBefore, runCleanup, runReminders, dueReminder } = await import("@/lib/jobs");
 const { encryptToken, hashToken, newToken } = await import("@/lib/security");
 
 const DAY = 86_400_000;
@@ -87,5 +87,18 @@ describe("promemoria e cancellazione (collaudo sezione 11)", () => {
     await db().updateProfile(p.id, { unsubscribed_at: T0.toISOString() });
     await simulate(12);
     expect(mails).toHaveLength(0);
+  });
+
+  it("completato: cancellato 24 mesi dopo il completamento, non prima", async () => {
+    const p = await newProfile("vecchio@example.com");
+    await db().updateProfile(p.id, { status: "completato", completed_at: "2026-11-02T10:00:00Z" });
+    expect(monthsBefore(new Date("2028-11-02T03:30:00Z"), 24).toISOString()).toBe("2026-11-02T00:00:00.000Z");
+
+    await runCleanup(new Date("2028-11-01T03:30:00Z"));
+    expect(await db().getProfile(p.id)).not.toBeNull();
+    await runCleanup(new Date("2028-11-02T03:30:00Z"));
+    expect(await db().getProfile(p.id)).not.toBeNull(); // completato alle 10:00, il limite è la mezzanotte
+    await runCleanup(new Date("2028-11-03T03:30:00Z"));
+    expect(await db().getProfile(p.id)).toBeNull();
   });
 });

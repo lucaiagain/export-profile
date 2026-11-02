@@ -85,6 +85,8 @@ export interface Store {
   listProfiles(f: ProfileFilters): Promise<ProfileRow[]>;
   /** Questionari in corso con ultima attività precedente a `before`. */
   listStale(before: string): Promise<ProfileRow[]>;
+  /** Profili completati prima di `before`. */
+  listCompletedBefore(before: string): Promise<ProfileRow[]>;
 
   remindersSent(profileId: string): Promise<number[]>;
   addReminder(profileId: string, n: number): Promise<void>;

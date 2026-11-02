@@ -64,6 +64,6 @@ npm run build
 
 - **Accesso del lead**: il link personale contiene un token casuale; nel database c'è l'hash (per la ricerca) e una copia cifrata AES-256-GCM (per rimetterlo nei promemoria). Nessuna lettura pubblica: RLS attiva senza policy, tutto passa dal server con la service role.
 - **Promemoria**: giorni di calendario (ora italiana) dall'ultima attività, invio alle 9 circa; ogni email ha il link per non riceverne altri. Si fermano al completamento.
-- **Cancellazione**: questionari non completati, al 14° giorno dall'ultima attività; se il contatto era su Brevo viene rimosso anche lì.
+- **Cancellazione**: questionari non completati al 14° giorno dall'ultima attività (`RETENTION_DAYS`); profili completati 24 mesi dopo il completamento (`COMPLETED_RETENTION_MONTHS`). Se il contatto era su Brevo viene rimosso anche lì. La copia consegnata a M.IA segue le regole di M.IA.
 - **WEM**: le correzioni si salvano in `overrides` (passi di 0,5); le risposte originali restano intatte.
 - **CSV**: separatore `;` con BOM, si apre direttamente in Excel.

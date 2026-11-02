@@ -55,6 +55,11 @@ export class SupabaseStore implements Store {
     if (f.service) q = q.eq("result->>recommended_service", f.service);
     return must(await q) as ProfileRow[];
   }
+  async listCompletedBefore(before: string) {
+    return must(
+      await this.db.from("profiles").select().eq("status", "completato").lt("completed_at", before),
+    ) as ProfileRow[];
+  }
   async listStale(before: string) {
     return must(
       await this.db.from("profiles").select().eq("status", "in_corso").lt("last_activity_at", before),

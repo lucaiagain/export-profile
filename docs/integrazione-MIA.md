@@ -86,6 +86,9 @@ export async function POST(req: Request) {
 | `consents.marketing_at` | `null` = nessun consenso alle comunicazioni commerciali: non usare il contatto per marketing |
 | `completed_at`, `*_at` | ISO 8601, UTC |
 
+## Conservazione
+Export Profile cancella i profili completati 24 mesi dopo il completamento (e i questionari non completati dopo 14 giorni, che a M.IA non arrivano mai). La cancellazione **non** viene comunicata a M.IA: la copia ricevuta segue le regole di conservazione di M.IA, da indicare nell'informativa privacy di IAGAIN.
+
 ## Uso previsto in M.IA
 - Collegare il profilo all'azienda fornitrice quando il lead diventa cliente, così da ricalcolarlo dopo 6-12 mesi e misurare la crescita.
 - In una fase successiva il motore di calcolo e la spec diventeranno un pacchetto condiviso, che M.IA userà anche per i questionari ai fornitori.

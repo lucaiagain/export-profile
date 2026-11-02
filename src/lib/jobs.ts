@@ -3,7 +3,7 @@ import "server-only";
 import { deleteContact } from "@/lib/brevo";
 import { sendMail } from "@/lib/mail";
 import { config } from "@/lib/config";
-import { db } from "@/lib/db";
+import { db, type ProfileRow } from "@/lib/db";
 import { reminderEmail } from "@/lib/emails";
 import { visibleQuestions } from "@/lib/engine";
 import { decryptToken } from "@/lib/security";
@@ -59,20 +59,38 @@ export async function runReminders(now = new Date()) {
   return { checked: stale.length, sent };
 }
 
+/** Inizio (UTC) dello stesso giorno, `months` mesi prima. */
+export function monthsBefore(now: Date, months: number) {
+  return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - months, now.getUTCDate()));
+}
+
+/** Cancella un profilo e, se c'era, il contatto Brevo. False se Brevo non risponde: si riprova al giro dopo. */
+async function erase(p: ProfileRow) {
+  if (p.sent_to_brevo_at) {
+    try {
+      await deleteContact(p.email);
+    } catch (e) {
+      console.error("Brevo: contatto non rimosso", p.id, e);
+      return false;
+    }
+  }
+  await db().deleteProfile(p.id);
+  return true;
+}
+
+/**
+ * Cancellazioni periodiche:
+ * - questionari non completati, RETENTION_DAYS giorni dopo l'ultima attività;
+ * - profili completati, COMPLETED_RETENTION_MONTHS mesi dopo il completamento.
+ * La copia già consegnata a M.IA segue le regole di conservazione di M.IA.
+ */
 export async function runCleanup(now = new Date()) {
   const store = db();
   const candidates = await store.listStale(new Date(now.getTime() - (config.retentionDays - 1) * DAY).toISOString());
   const stale = candidates.filter((p) => calendarDays(new Date(p.last_activity_at), now) >= config.retentionDays);
-  for (const p of stale) {
-    if (p.sent_to_brevo_at) {
-      try {
-        await deleteContact(p.email);
-      } catch (e) {
-        console.error("Brevo: contatto non rimosso", p.id, e);
-        continue; // si riprova al prossimo giro, senza perdere la traccia
-      }
-    }
-    await store.deleteProfile(p.id);
-  }
-  return { deleted: stale.length };
+  const expired = await store.listCompletedBefore(monthsBefore(now, config.completedRetentionMonths).toISOString());
+
+  let deleted = 0;
+  for (const p of [...stale, ...expired]) if (await erase(p)) deleted++;
+  return { incomplete: stale.length, completed: expired.length, deleted };
 }

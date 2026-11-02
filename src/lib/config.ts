@@ -24,6 +24,8 @@ export const config = {
     .slice(0, 3),
   /** Cancellazione dei questionari non completati, in giorni dall'ultima attività. */
   retentionDays: Number(env("RETENTION_DAYS", "14")),
+  /** Cancellazione dei profili completati, in mesi dal completamento. */
+  completedRetentionMonths: Number(env("COMPLETED_RETENTION_MONTHS", "24")),
 
   brevoEnabled: flag("BREVO_ENABLED"),
   brevoApiKey: env("BREVO_API_KEY"),

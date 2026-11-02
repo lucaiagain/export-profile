@@ -85,6 +85,9 @@ export class DevStore implements Store {
       )
       .sort((a, b) => b.created_at.localeCompare(a.created_at));
   }
+  async listCompletedBefore(before: string) {
+    return load().profiles.filter((p) => p.status === "completato" && !!p.completed_at && p.completed_at < before);
+  }
   async listStale(before: string) {
     return load().profiles.filter((p) => p.status === "in_corso" && p.last_activity_at < before);
   }
